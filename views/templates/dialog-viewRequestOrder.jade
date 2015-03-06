@@ -1,0 +1,36 @@
+material-dialog(id="dialog-viewRequestOrder")
+  .dialog-content.height-md
+    h4 餐桌 <b>{{request.Table.TableName}}</b> 提交点菜
+
+    h4 <b>忌口</b>: {{request.FlavorRequirements | makeArrayText}}
+
+    material-list
+      material-item.list-header
+        .material-tile-left
+          b 编号
+        .material-tile-content
+          b 菜品
+        .material-tile-right
+          b 数量
+      material-item(ng-repeat="orderItem in orderItems | orderBy:['alias'] track by $index")
+        .material-tile-left
+          b {{orderItem.alias}}
+        .material-tile-content
+          h2 {{orderItem.name}}
+            span(ng-show="orderItem.flavor") &nbsp;({{orderItem.flavor}})
+          h3 {{orderItem.type}} {{orderItem.price}}元
+        .material-tile-right
+          | x{{orderItem.count}}
+
+  .dialog-actions(layout="horizontal")
+    material-button.material-button-raised.material-theme-light(
+      ng-if="allowAction == true"
+      ng-disabled="justClick == true"
+      flex="80" ng-click="clickConfirmOrder()")
+      span(ng-show="justClick == false") 已下单, 关闭请求
+      span(ng-show="justClick == true") 正在处理&nbsp;
+        i.fa.fa-spin.fa-spinner
+    material-button.material-button-colored(
+      flex="20" ng-click="clickCancel()")
+      span(ng-if="allowAction == true") 取消
+      span(ng-if="allowAction == false") 关闭

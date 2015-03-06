@@ -1,0 +1,31 @@
+#user .pane {
+  width: 400px;
+  min-height: 200px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  background-color: #ffffff;
+}
+
+#user .pane material-button {
+  margin-top: 30px;
+  height: 40px;
+  line-height: 32px;
+  margin-bottom: 15px;
+  left: 25%;
+  width: 50%;
+}
+
+#user .pane label,
+#user .pane input {
+  width: 100%;
+}
+
+#user #userInfo .material-tile-left {
+  width: 80px;
+}
+
+#user material-radio-button {
+  margin: 0px;
+}

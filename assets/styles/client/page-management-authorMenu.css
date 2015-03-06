@@ -1,0 +1,125 @@
+#author .pane {
+  min-height: 200px;
+  width: 750px;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  display: inherit;
+  background-color: #ffffff;
+}
+
+#author .header material-button {
+  height: 40px;
+  width: 30px;
+  font-size: 20px;
+  margin-left: 5px;
+}
+
+#author .header input {
+  border-color: #8A1717;
+  border-bottom-width: 2px;
+  height: 30px;
+  padding: 0;
+  margin-left: 5px;
+}
+
+#author material-tabs .material-ink-ripple {
+  color: #fff
+}
+
+#author .tabs-header {
+  background-color: #8A1717;
+}
+
+#author material-tab {
+  background-color: #D3CFCA;
+}
+
+#author material-tab.active {
+  background-color: #8A1717;
+}
+
+#author material-tab-label {
+  font-weight: bold;
+  color: #818181;
+  font-size: 18px;
+  text-transform: none;
+}
+
+#author material-tab-label.active {
+  color: #f1f1f1;
+}
+
+#author .material-tile-left material-button {
+  width: 40px;
+  font-size: 20px;
+}
+
+#author .material-tile-right material-button {
+  font-size: 18px;
+}
+
+#author .material-tile-right material-button .fa {
+  font-size: 20px;
+}
+
+#author .list-header .material-tile-content {
+  font-size: 16px;
+  border-bottom: 1px solid #8A1717;
+}
+
+#author .list-header .material-tile-content b {
+  margin-left: 3px;
+}
+
+#author .material-tile-right {
+  width: 80px;
+}
+
+#author .material-tile-content > form > span {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 32px;
+  margin: auto;
+}
+
+#author .material-tile-content input {
+  margin-right: 10px;
+}
+
+#author .material-tile-content input[disabled] {
+  font-weight: bold;
+}
+
+#author .material-tile-content input:focus,
+#author .material-tile-content input.dirty {
+  border-color: #8A1717;
+  border-bottom-width: 2px;
+}
+
+#author .material-tile-content input[readonly]:focus {
+  border-color: transparent;
+  border-bottom-width: 0px;
+}
+
+#author material-item.new .material-tile-content input[readonly] {
+  color: #A0A0A0;
+}
+
+#author .material-tile-content material-button {
+  padding: 0px;
+  padding-top: 5px;
+  text-align: left;
+  font-size: 0.85em;
+  word-wrap: break-word;
+  margin: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#author material-button.flavorRequirements {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,116 @@
+div(id="author" flex layout="vertical" layout-fill)
+
+  div.text-unselectable(layout="horizontal" layout-align="center" layout-padding)
+    .pane.material-whiteframe-z2(layout="vertical" layout-align="center")
+
+      .text-center(ng-show="menuItems == null")
+        i.fa.fa-spin.fa-refresh.fa-4x
+        p 同步数据...
+
+      div(ng-show="menuItems != null")
+        material-button.flavorRequirements.hover(
+          ng-click="clickFlavorRequirements()")
+          span <b>编辑忌口:</b> {{flavorRequirements | makeArrayText}}
+        p
+          b(style="margin-left: 5px;") 编辑菜单:
+        div.header(layout="horizontal")
+          material-tabs(flex="80" selected="selectedIndex" nobar)
+            material-tab(
+              ng-repeat="menuType in menuTypes track by $index"
+              ng-class="{active:selectedIndex==$index}"
+              on-select="onTabSelected()"
+              disabled="false")
+              material-tab-label
+                b {{menuType}}
+          material-button.material-button-raised.material-theme-light(
+            ng-disabled="ifValidNewType()===false"
+            ng-click="clickNewType()")
+            i.fa.fa-plus
+          material-input-group.material-input-group-theme-light
+            material-input.full-width(type="text" ng-model="newType" placeholder="新类别")
+
+        material-list
+          material-item.list-header
+            .material-tile-left
+            .material-tile-content(layout="horizontal")
+              b(flex="30") 名称
+              b(flex="10") 编号
+              b(flex="10") 类别
+              b(flex="10") 价格
+              b(flex="10") 会员价
+              b(flex) 特调
+            .material-tile-right
+          material-item(ng-repeat="menuItem in menuItems | filter:ifBelongToType")
+            .material-tile-left
+              material-button.material-button-raised.material-theme-light(
+                ng-show="ifDirty(menuItem)" ng-click="clickUpdateItem(menuItem)"
+                ng-disabled="ifValidItem(menuItem)===false || justClickUpdate == true")
+                i.fa.fa-check
+              material-button.material-button-raised(
+                ng-show="ifDirty(menuItem)===false" ng-click="clickDeleteItem(menuItem, $event)")
+                i.fa.fa-trash
+            .material-tile-content
+              form(name="form{{menuItem.id}}" layout="horizontal")
+                span.text-selectable(flex="30") {{menuItem.Name}}
+                  h3 被点{{menuItem.OrderCount | makeNumber}}次
+                material-input(
+                  flex="10"
+                  ng-class="{'dirty':form{{menuItem.id}}.Alias.$dirty}"
+                  type="text" ng-model="menuItem.Alias" name="Alias")
+                material-button.hover(
+                  flex="10" ng-click="clickItemType(menuItem, $event)") {{menuItem.Type}}
+                material-input(
+                  flex="10"
+                  ng-class="{'dirty':form{{menuItem.id}}.Price.$dirty}"
+                  type="text" ng-model="menuItem.Price" name="Price")
+                material-input(
+                  flex="10"
+                  ng-class="{'dirty':form{{menuItem.id}}.PremiumPrice.$dirty}"
+                  type="text" ng-model="menuItem.PremiumPrice" name="PremiumPrice")
+                material-button.hover(
+                  flex ng-click="clickItemFlavor(menuItem, $event)") {{menuItem.Flavor | makeArrayText}}
+            .material-tile-right
+              material-button.material-button-colored(
+                ng-show="ifDirty(menuItem)"
+                ng-click="clickDiscardChange(menuItem)") 清除改动
+              material-button.material-button-colored(
+                ng-show="ifDirty(menuItem) == false"
+                ng-click="clickToggleStar(menuItem)"
+                ng-disabled="justClickUpdate == true")
+                i.fa.fa-star(ng-show="menuItem.IsRecommended == true")
+                i.fa.fa-star-o(ng-show="!menuItem.IsRecommended")
+
+          material-item.new
+            .material-tile-left
+              material-button.material-button-raised.material-theme-light(
+                ng-click="clickNewItem()"
+                ng-disabled="ifValidItem(newMenuItem)===false"
+                )
+                i.fa.fa-plus
+            .material-tile-content(layout="horizontal")
+              material-input(
+                flex="30"
+                ng-class="{'dirty':newMenuItem.Name!=''}"
+                type="text" ng-model="newMenuItem.Name" name="Name" placeholder="名称")
+              material-input(
+                flex="10"
+                ng-class="{'dirty':newMenuItem.Alias!=''}"
+                type="text" ng-model="newMenuItem.Alias" name="Alias" placeholder="编号")
+              material-input(
+                flex="10"
+                readonly
+                type="text" ng-model="newMenuItem.Type" name="Type" placeholder="类型")
+              material-input(
+                flex="10"
+                ng-class="{'dirty':newMenuItem.Price!=''}"
+                type="text" ng-model="newMenuItem.Price" name="Price" placeholder="价格")
+              material-input(
+                flex="10"
+                ng-class="{'dirty':newMenuItem.PremiumPrice!=''}"
+                type="text" ng-model="newMenuItem.PremiumPrice" name="PremiumPrice" placeholder="会员价")
+              div(flex)
+
+            .material-tile-right
+              material-button.material-button-colored(
+                ng-show="newMenuItem.Name!='' || newMenuItem.Price!='' || newMenuItem.PremiumPrice!=''"
+                ng-click="clickResetNewItem()") 清除
