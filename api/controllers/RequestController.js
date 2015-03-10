@@ -276,7 +276,7 @@ function createOrder (req, res, table, restaurantId, type) {
   var validateCount = 0;
   for (var i = orderItems.length - 1; i >= 0; i--) {
     var orderId = orderItems[i].toString(); // in format like 28.4, 17.10, 36
-    var menuItemId = parseInt(orderId.split('.')[0]); // --> 28, 17, 36
+    var menuItemId = orderId.split('.')[0]; // --> 28, 17, 36
 
     sails.log.debug('validate menuItemId = ' + menuItemId + ', restaurantId = ' + restaurantId);
     MenuItem.findOne({
