@@ -451,6 +451,7 @@ function rcsRequest ($materialDialog, rcsSession, makeOrderGroupFilter, makeArra
 
     // scope methods
     $scope.clickRequest = clickRequest;
+    $scope.playSound = playSound;
     $scope.getRequestAdditionalText = getRequestAdditionalText;
     $scope.getRequestText = getRequestText;
     $scope.getTooltip = getTooltip;
@@ -485,6 +486,14 @@ function rcsRequest ($materialDialog, rcsSession, makeOrderGroupFilter, makeArra
       } else {
         alert(status);
       }
+    }
+
+    function playSound () {
+      var sound = $scope.request.Table.TableName + getRequestText();
+      var mp3 = 'http://tts.baidu.com/text2audio?lan=zh&pid=101&ie=UTF-8&text=' + sound + '&spd=2';
+      //var embed = "<embed src='" + mp3 + "' hidden='true' autostart='true' loop='false'>" +
+      var audio = "<audio autoplay='autoplay' src='" + mp3 + "' style='display:none;' controls='controls'></audio>";
+      $(audio).appendTo('body');
     }
 
     function clickRequest (event) {

@@ -171,7 +171,13 @@ function rcsRequest ($modal, $materialDialog, rcsAPI, rcsData, REQUEST_STATUS, R
       var modalTemplate = '/template/modalViewRequest';
     }
 
+    $scope.playSound = function(e) {
+      alert(1);
+      return false;
+    }
+
     $scope.clickRequest = function (e) {
+      alert(12);
       switch ($scope.request.Status) {
         case REQUEST_STATUS.new:
           processRequest(e);
@@ -267,5 +273,6 @@ function rcsRequest ($modal, $materialDialog, rcsAPI, rcsData, REQUEST_STATUS, R
     $scope.isInProgress = function () {
       return $scope.request.Status == REQUEST_STATUS.inProgress;
     }
+
   }
 }

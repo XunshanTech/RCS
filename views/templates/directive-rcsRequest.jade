@@ -1,5 +1,4 @@
 material-item.rcs-request(
-  ng-click="clickRequest($event)"
   tooltip-placement="left"
   tooltip-popup-delay="100"
   tooltip-html-unsafe="{{getTooltip()}}")
@@ -9,7 +8,11 @@ material-item.rcs-request(
     b.fa.fa-coffee(ng-if="request.Type==requestType.water")
     b.fa.fa-list-alt(ng-if="request.Type==requestType.order")
   .material-tile-content
-    h2 <b>{{request.Table.TableName}}</b> {{getRequestText()}}
+    h2
+      span(ng-click="clickRequest($event)")
+        b {{request.Table.TableName}}
+        | {{getRequestText()}}&nbsp;&nbsp;
+      i.fa.fa-volume-up(ng-click='playSound()')
     h3 {{getRequestAdditionalText()}}
     h3(ng-show="request.CellPhone") 会员 <b>{{request.CellPhone}}</b>
   .material-tile-right
