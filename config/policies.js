@@ -87,6 +87,7 @@ module.exports.policies = {
     'list': ['isAuthenticated', 'hasRestaurantPermission'],
     'start': ['isAuthenticated', 'hasRequestPermission'],
     'close': ['isAuthenticated', 'hasRequestPermission'],
+    'soundPlay' : ['isAuthenticated', 'hasRequestPermission'],
     'get': 'isLinkedTabletOfRestaurant',
     'deleteAll': true // test only
   },

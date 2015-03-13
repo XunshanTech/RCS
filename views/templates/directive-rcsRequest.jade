@@ -12,7 +12,7 @@ material-item.rcs-request(
       span(ng-click="clickRequest($event)")
         b {{request.Table.TableName}}
         | {{getRequestText()}}&nbsp;&nbsp;
-      i.fa.fa-volume-up(ng-click='playSound()')
+      i.fa.fa-volume-up(ng-if="request.Status!=requestStatus.closed", ng-click='playSound()')
     h3 {{getRequestAdditionalText()}}
     h3(ng-show="request.CellPhone") 会员 <b>{{request.CellPhone}}</b>
   .material-tile-right

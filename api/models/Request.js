@@ -68,8 +68,8 @@ module.exports = {
     FlavorRequirements: 'array',
 
     SoundPlayed: {
-      type: 'int',
-      defaultsTo: 1 // 0 - un play; 1 - played
+      type: 'boolean',
+      defaultsTo: false // false - un play; true - played
     },
 
     // Attributes methods

@@ -249,6 +249,36 @@ module.exports = {
     });
   },
 
+  soundPlay: function (req, res) {
+    var requestId = req.param('id');
+
+    Request.findOneById(requestId).exec(function (err, request) {
+      if (err) {
+        return res.serverError(err);
+      }
+
+      if (!request) {
+        return res.badRequest('Invalid requestId = ' + requestId);
+      }
+
+      if (request.SoundPlayed) {
+        return res.json({
+          message: 'request has already been played'
+        });
+      }
+
+      request.SoundPlayed = true;
+      request.ClosedAt = new Date();
+
+      request.save(function (err) {
+        if (err) {
+          return res.serverError(err);
+        }
+        return res.json(request);
+      });
+    });
+  },
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to RequestController)
@@ -368,6 +398,7 @@ function createRequest (res, request, table) {
 
 function bumpImportance (res, existingRequest, table, restaurantId) {
   existingRequest.Importance = parseInt(existingRequest.Importance) == 0 ? 1 : 1;
+  existingRequest.SoundPlayed = false;
   existingRequest.save(function (err) {
     if (err) {
       return res.serverError(err);
