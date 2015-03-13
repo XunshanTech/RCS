@@ -67,6 +67,11 @@ module.exports = {
 
     FlavorRequirements: 'array',
 
+    SoundPlayed: {
+      type: 'int',
+      defaultsTo: 1 // 0 - un play; 1 - played
+    },
+
     // Attributes methods
     getMessage: function (tableName) {
       return {
@@ -84,7 +89,8 @@ module.exports = {
         FlavorRequirements: this.FlavorRequirements,
         Table: {
           TableName: tableName
-        }
+        },
+        SoundPlayed: this.SoundPlayed
       };
     }
   }
