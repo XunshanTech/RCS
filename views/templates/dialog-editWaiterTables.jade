@@ -1,6 +1,14 @@
-material-dialog.width-md
+material-dialog.width-md(id='dialog-editWaiterTables')
   .dialog-content.height-md
-    b 请选择服务员 {{waiterName}} 所管理的桌子
+    .title 请选择服务员 {{waiterName}} 所管理的桌子
+    div
+      div(ng-repeat='tableRows in tables', layout='horizontal', layout-align='center')
+        div(ng-repeat='table in tableRows track by $index', flex)
+          .waiter-table(
+            ng-click="clickEditTable($event)"
+            ng-class=editModeClass)
+            .rcs-table-text(ng-show="!table") (空)
+            .rcs-table-text(ng-show="table") {{table.TableName}}
   .dialog-actions(layout="horizontal")
     material-button.material-button-raised.material-theme-light(ng-click="clickDelete()") 更改桌子完成，请点此确认。
     span &nbsp;&nbsp;

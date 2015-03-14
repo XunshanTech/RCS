@@ -1056,6 +1056,9 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
         $scope.clickDelete = clickDelete;
         $scope.clickCancel = clickCancel;
 
+        var tables = rcsSession.getTables();
+        $scope.tables = tables;
+        console.log(tables);
         function clickDelete () {
           rcsHttp.Waiter.delete(
               waiter.Restaurant,
