@@ -6,7 +6,7 @@ angular
   .controller('newRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', newRestaurantCtrl])
   .controller('monitorCtrl', ['$rootScope', '$scope', '$state', 'rcsSession', 'RCS_EVENT', monitorCtrl])
   .controller('monitorTableCtrl', ['$scope', 'rcsSession', monitorTableCtrl])
-  .controller('monitorRequestCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', monitorRequestCtrl])
+  .controller('monitorRequestCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', 'REQUEST_TYPE', monitorRequestCtrl])
   .controller('monitorWaiterCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', monitorWaiterCtrl])
   .controller('authorMenuCtrl', ['$scope', '$state', '$timeout', '$materialDialog', 'rcsHttp', 'rcsSession', 'makeArrayTextFilter', 'makeNumberFilter', authorMenuCtrl])
   .controller('arrangeWaiterCtrl', ['$scope', '$state', '$materialDialog', 'rcsHttp', 'rcsSession', arrangeWaiterCtrl])
@@ -381,7 +381,7 @@ function monitorTableCtrl($scope, rcsSession) {
   }
 }
 
-function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT) {
+function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_TYPE) {
   // scope fields
   $scope.requests = null;
   $scope.selectedIndex = 0;
@@ -394,6 +394,75 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT) {
   // events
   $rootScope.$on(RCS_EVENT.requestsUpdate, initializeRequests);
 
+  window.playList = [];
+
+  var playSound = function(request) {
+    var sound = request.Table.TableName + getRequestText(request);
+    var mp3 = 'http://tts.baidu.com/text2audio?lan=zh&pid=101&ie=UTF-8&text=' + sound + '&spd=2';
+    //var embed = "<embed src='" + mp3 + "' hidden='true' autostart='true' loop='false'>" +
+    var audio = "<audio autoplay='autoplay' src='" + mp3 + "' style='display:none;' controls='controls'></audio>";
+    $(audio).appendTo('body');
+  }
+
+  var play = function() {
+    if(window.playInterval) window.clearInterval(window.playInterval);
+    window.playInterval = window.setInterval(function() {
+      if(playList.length === 0) return window.clearInterval(window.playInterval);
+      var request = playList[0];
+      playSound(request);
+      request.playCount = request.playCount || 0;
+      request.playCount++;
+      // if played 2 times, and kill it
+      if(request.playCount === 2) {
+        playList.splice(0, 1);
+        rcsSession.soundPlay(request.id);
+        switch(request.Type) {
+          case REQUEST_TYPE.call:
+          case REQUEST_TYPE.water:
+            rcsSession.closeRequest(request)
+        }
+      }
+    }, 5000);
+  }
+
+  var getRequestTypeText = function(request) {
+    switch (request.Type) {
+      case REQUEST_TYPE.call:
+        return REQUEST_TYPE.callText;
+      case REQUEST_TYPE.pay:
+        return REQUEST_TYPE.payText;
+      case REQUEST_TYPE.water:
+        return REQUEST_TYPE.waterText;
+      case REQUEST_TYPE.order:
+        return REQUEST_TYPE.orderText;
+      default:
+        return request.Type;
+    }
+  }
+
+  var getRequestText = function(request) {
+    return getRequestTypeText(request) + (request.IsPremium ? '(会员)' : '');
+  }
+
+  var initializeSoundPlay = function() {
+    for(var i = 0; i < $scope.requests.length; i++) {
+      var request = $scope.requests[i];
+      if(request.Status !== 'closed' && !request.SoundPlayed) {
+        var _hasInPlayList = false;
+        for(var j = 0; j < window.playList.length; j++) {
+          if(window.playList[j].id === request.id) {
+            _hasInPlayList = true;
+            break;
+          }
+        }
+        if(!_hasInPlayList) {
+          window.playList.push(request);
+        }
+      }
+    }
+    play();
+  }
+
   // initialize
   initializeRequests();
 
@@ -401,6 +470,7 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT) {
   function initializeRequests () {
     $scope.requests = rcsSession.getRequests();
     $scope.safeApply();
+    initializeSoundPlay();
   }
 
   function ifHasActiveRequest () {

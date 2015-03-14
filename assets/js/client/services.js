@@ -30,7 +30,8 @@ function rcsSession ($rootScope, $state, $log, rcsHttp, RCS_EVENT, REQUEST_STATU
     startRequest: startRequest,
     closeRequest: closeRequest,
     toggleWaiterBusy: toggleWaiterBusy,
-    ifSocketReady: ifSocketReady
+    ifSocketReady: ifSocketReady,
+    soundPlay: soundPlay
   };
 
   // locals
@@ -514,6 +515,20 @@ function rcsSession ($rootScope, $state, $log, rcsHttp, RCS_EVENT, REQUEST_STATU
     return rcsSocketDataReady;
   }
 
+  function soundPlay(requestId, successAction, errorAction) {
+    if (!angular.isFunction(successAction)) {
+      successAction = function () {};
+    }
+
+    if (!angular.isFunction(errorAction)) {
+      errorAction = function () {};
+    }
+
+    rcsHttp.Request.soundPlay(requestId)
+      .success(successAction)
+      .error(errorAction);
+  }
+
   return sessionService;
 }
 
@@ -691,6 +706,11 @@ function rcsHttp ($rootScope, $http, $state, $log, RCS_EVENT) {
     close: function (requestId) {
       return $http
         .post('Request/close/' + requestId)
+        .error(errorAction);
+    },
+    soundPlay: function(requestId) {
+      return $http
+        .post('Request/soundPlay/' + requestId)
         .error(errorAction);
     }
   }
