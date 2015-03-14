@@ -14,12 +14,28 @@
   display: inherit;
   background-color: #ffffff;
 }
-
+#waiter .list-header {
+  border-bottom: 1px solid #8A1717;
+}
 #waiter .list-header .material-tile-content,
 #waiter .list-header .material-tile-right {
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #8A1717;
+}
+#waiter material-item {
+  border-bottom: 1px solid #eee;
+}
+#waiter .material-tile-content {
+  border-bottom: 0;
+}
+#waiter .waiter-change-status {
+  min-width: 120px;
+  text-align: center;
+}
+#waiter .waiter-change-status meterial-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #waiter .material-tile-left material-button {

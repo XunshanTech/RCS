@@ -15,15 +15,17 @@ div(id="waiter" flex layout="vertical" layout-fill)
             .material-tile-left
             .material-tile-content
               b 名称
-            .material-tile-right
-              b 在线状态(点击切换)
+            .material-tile-content
+              b 管理餐桌
+            .material-tile-right.waiter-change-status
+              b 状态(点击切换)
           material-item(ng-repeat="waiter in waiters")
             .material-tile-left
               material-button.material-button-raised(ng-click="clickDeleteWaiter(waiter, $event)")
                 i.fa.fa-trash
-            .material-tile-content
-              {{waiter.Name}}
-            .material-tile-right
+            .material-tile-content {{waiter.Name}}
+            .material-tile-content 餐桌01
+            .material-tile-right.waiter-change-status
               material-button.hover(ng-click="clickToggleOnline(waiter)")
                 span.online(ng-show="waiter.Online == true") 在线
                 span(ng-show="waiter.Online == false") 离线
