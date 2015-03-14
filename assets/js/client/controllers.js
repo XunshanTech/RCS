@@ -979,6 +979,7 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
   $scope.clickDeleteWaiter = clickDeleteWaiter;
   $scope.clickToggleOnline = clickToggleOnline;
   $scope.ifDisableAddWaiter = ifDisableAddWaiter;
+  $scope.clickEditWaiterTables = clickEditWaiterTables;
 
   // initialize
   if (!rcsSession.getSelectedRestaurant()) {
@@ -1041,6 +1042,38 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
       }]
     };
     $materialDialog(dialogDelete);
+  }
+
+  function clickEditWaiterTables(waiter) {
+    var i = $scope.waiters.indexOf(waiter);
+    var waiterScope = $scope;
+
+    var dialogEditWaiterTables = {
+      templateUrl: 'template/dialog-editWaiterTables',
+      targetEvent: event,
+      controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
+        $scope.waiterName = waiter.Name;
+        $scope.clickDelete = clickDelete;
+        $scope.clickCancel = clickCancel;
+
+        function clickDelete () {
+          rcsHttp.Waiter.delete(
+              waiter.Restaurant,
+              waiter.id
+            )
+            .success(function(res) {
+              $hideDialog();
+              waiterScope.waiters.splice(i, 1);
+            })
+            .error(requestErrorAction);
+        }
+
+        function clickCancel () {
+          $hideDialog();
+        }
+      }]
+    };
+    $materialDialog(dialogEditWaiterTables);
   }
 
   function clickToggleOnline (waiter) {

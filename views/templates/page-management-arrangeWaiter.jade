@@ -16,7 +16,7 @@ div(id="waiter" flex layout="vertical" layout-fill)
             .material-tile-content
               b 名称
             .material-tile-content
-              b 管理餐桌
+              b 管理桌子
             .material-tile-right.waiter-change-status
               b 状态(点击切换)
           material-item(ng-repeat="waiter in waiters")
@@ -25,6 +25,8 @@ div(id="waiter" flex layout="vertical" layout-fill)
                 i.fa.fa-trash
             .material-tile-content {{waiter.Name}}
             .material-tile-content 餐桌01
+              br
+              a(href='javascript:{}', ng-click='clickEditWaiterTables(waiter)') 更改
             .material-tile-right.waiter-change-status
               material-button.hover(ng-click="clickToggleOnline(waiter)")
                 span.online(ng-show="waiter.Online == true") 在线
