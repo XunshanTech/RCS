@@ -1046,7 +1046,6 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
 
   function clickEditWaiterTables(waiter) {
     var i = $scope.waiters.indexOf(waiter);
-    var waiterScope = $scope;
 
     var dialogEditWaiterTables = {
       templateUrl: 'template/dialog-editWaiterTables',
@@ -1070,11 +1069,12 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
           for(var i = 0; i < tables.length; i++) {
             for(var j = 0; j < tables[i].length; j++) {
               if(tables[i][j] && tables[i][j].sel) {
-                selTables.push(tables[i][j]);
+                selTables.push(tables[i][j].id);
               }
             }
           }
-          console.log(selTables);
+          waiter.Tables = selTables;
+          rcsHttp.Waiter.bindTables(restaurantId, waiter.id, selTables);
           $hideDialog();
           /*rcsHttp.Waiter.delete(
               waiter.Restaurant,

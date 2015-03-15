@@ -17,7 +17,7 @@ module.exports = {
     Waiter.findOne({
       Name: name,
       Restaurant: restaurantId
-    }).exec(function (err, existingWaiter) {
+    }).populate('Tables').exec(function (err, existingWaiter) {
       if (err) {
         return res.serverError(err);
       }
@@ -46,6 +46,7 @@ module.exports = {
     var waiterId = req.param('id');
     var online = req.body.Online;
     var busy = req.body.Busy;
+    var tableIds = req.body.TableIds;
 
     if (!waiterId) {
       return res.badRequest('Missing required fields.');
@@ -54,7 +55,7 @@ module.exports = {
     Waiter.findOne({
       Restaurant: restaurantId,
       id: waiterId
-    }).exec(function (err, waiter) {
+    }).populate('Tables').exec(function (err, waiter) {
       if (err) {
         return res.serverError(err);
       }
@@ -73,6 +74,13 @@ module.exports = {
 
       if (waiter.Online == false) {
         waiter.Busy = false;
+      }
+
+      if(tableIds.length > 0) {
+        waiter.Tables = [];
+        tableIds.forEach(function(tableId) {
+          waiter.Tables.add(tableId);
+        })
       }
 
       waiter.save(function (err, watier) {
