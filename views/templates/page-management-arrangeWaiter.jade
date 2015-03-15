@@ -25,8 +25,8 @@ div(id="waiter" flex layout="vertical" layout-fill)
                 i.fa.fa-trash
             .material-tile-content {{waiter.Name}}
             .material-tile-content
-              b(ng-repeat='table in waiter.Tables') {{table.TableName}} &nbsp;&nbsp;
-              br
+              div
+                b(ng-repeat='table in waiter.Tables') {{table.TableName}} &nbsp;&nbsp;
               a(href='javascript:{}', ng-click='clickEditWaiterTables(waiter)') 更改
             .material-tile-right.waiter-change-status
               material-button.hover(ng-click="clickToggleOnline(waiter)")
