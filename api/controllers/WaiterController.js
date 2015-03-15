@@ -76,7 +76,7 @@ module.exports = {
         waiter.Busy = false;
       }
 
-      if(tableIds.length > 0) {
+      if(tableIds && tableIds.length > 0) {
         waiter.Tables = [];
         tableIds.forEach(function(tableId) {
           waiter.Tables.add(tableId);
