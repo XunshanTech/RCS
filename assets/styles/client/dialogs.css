@@ -206,12 +206,17 @@
 
 #dialog-editWaiterTables .waiter-table {
   width: 50px;
-  height: 40px;
+  height: 50px;
   background-color: #eee;
   margin: 0 5px 5px 0;
   font-size: 14px;
   text-align: center;
   padding-top: 10px;
+  cursor: pointer;
+}
+#dialog-editWaiterTables .waiter-table.sel {
+  background-color: #8a1717;
+  color: #fff;
 }
 #dialog-editWaiterTables .dialog-content {
   overflow-y: scroll;
@@ -220,4 +225,11 @@
   font-size: 18px;
   font-weight: bold;
   padding-bottom: 10px;
+}
+#dialog-editWaiterTables .dialog-actions {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#dialog-editWaiterTables .dialog-actions material-button {
+  margin-left: 10px;
 }

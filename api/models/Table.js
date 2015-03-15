@@ -68,6 +68,11 @@ module.exports = {
       via: 'Table'
     },
 
+    WaiterTable: { // Many to many
+      collection: 'waiter',
+      via: 'Tables'
+    },
+
     OrderItems: 'array',
 
     FlavorRequirements: 'array',

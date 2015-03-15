@@ -1053,14 +1053,30 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
       targetEvent: event,
       controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
         $scope.waiterName = waiter.Name;
-        $scope.clickDelete = clickDelete;
+        $scope.clickBindWaiterTables = clickBindWaiterTables;
         $scope.clickCancel = clickCancel;
+        $scope.clickSelTable = clickSelTable;
 
         var tables = rcsSession.getTables();
         $scope.tables = tables;
-        console.log(tables);
-        function clickDelete () {
-          rcsHttp.Waiter.delete(
+
+        function clickSelTable(table) {
+          table.sel = !table.sel || false;
+        }
+
+        function clickBindWaiterTables () {
+          var selTables = [];
+          var tables = $scope.tables;
+          for(var i = 0; i < tables.length; i++) {
+            for(var j = 0; j < tables[i].length; j++) {
+              if(tables[i][j] && tables[i][j].sel) {
+                selTables.push(tables[i][j]);
+              }
+            }
+          }
+          console.log(selTables);
+          $hideDialog();
+          /*rcsHttp.Waiter.delete(
               waiter.Restaurant,
               waiter.id
             )
@@ -1068,7 +1084,7 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
               $hideDialog();
               waiterScope.waiters.splice(i, 1);
             })
-            .error(requestErrorAction);
+            .error(requestErrorAction);*/
         }
 
         function clickCancel () {
