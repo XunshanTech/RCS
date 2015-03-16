@@ -1,7 +1,7 @@
 angular
   .module('rcs')
   .directive('breadcrumb', ['$state', '$stateParams', '$interpolate', breadcrumb])
-  .directive('rcsTable', ['$rootScope', '$materialDialog', 'rcsSession', 'makeOrderGroupFilter', 'makeArrayTextFilter', 'RCS_EVENT', 'TABLE_STATUS', rcsTable])
+  .directive('rcsTable', ['$rootScope', '$materialDialog', 'rcsSession', 'rcsCommon', 'makeOrderGroupFilter', 'makeArrayTextFilter', 'RCS_EVENT', 'TABLE_STATUS', rcsTable])
   .directive('rcsRequest', ['$materialDialog', 'rcsSession', 'makeOrderGroupFilter', 'makeArrayTextFilter', 'REQUEST_STATUS', 'REQUEST_TYPE', 'PAY_TYPE', rcsRequest]);
 
 // directives
@@ -34,7 +34,7 @@ function breadcrumb ($state, $stateParams, $interpolate) {
   }
 }
 
-function rcsTable ($rootScope, $materialDialog, rcsSession, makeOrderGroupFilter, makeArrayTextFilter, RCS_EVENT, TABLE_STATUS) {
+function rcsTable ($rootScope, $materialDialog, rcsSession, rcsCommon, makeOrderGroupFilter, makeArrayTextFilter, RCS_EVENT, TABLE_STATUS) {
   return {
     link: link,
     $scope: {
@@ -115,6 +115,7 @@ function rcsTable ($rootScope, $materialDialog, rcsSession, makeOrderGroupFilter
         targetEvent: event,
         controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
           // scope fields
+          $scope.leftTime = 3;
           $scope.selectedIndex = 0;
           $scope.table = angular.copy(tableScope.table);
           $scope.orderItems = makeOrderGroupFilter(
@@ -148,6 +149,8 @@ function rcsTable ($rootScope, $materialDialog, rcsSession, makeOrderGroupFilter
 
           // locals
           var getMidOfNextHour = getMidOfNextHour;
+
+          //rcsCommon.changeDialogLeftTime($scope, 3, $hideDialog);
 
           // defines
           function getMidOfNextHour () {

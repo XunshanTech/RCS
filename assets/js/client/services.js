@@ -1,5 +1,6 @@
 angular
   .module('rcs')
+  .factory('rcsCommon', [rcsCommon])
   .factory('rcsHttp', ['$rootScope', '$http', '$state', '$log', 'RCS_EVENT', rcsHttp])
   .factory('rcsSession', ['$rootScope', '$state', '$log', 'rcsHttp', 'RCS_EVENT', 'REQUEST_STATUS', rcsSession]);
 
@@ -794,4 +795,23 @@ function rcsHttp ($rootScope, $http, $state, $log, RCS_EVENT) {
   }
 
   return rcsHttp;
+}
+
+function rcsCommon() {
+  var commonService = {
+    changeDialogLeftTime: changeDialogLeftTime
+  };
+  function changeDialogLeftTime($scope, leftTime, $hideDialog) {
+    $scope.leftTime = leftTime;
+    var leftTimeInterval = window.setInterval(function() {
+      $scope.$apply(function() {
+        $scope.leftTime = $scope.leftTime - 1;
+      })
+      if($scope.leftTime === 0) {
+        window.clearInterval(leftTimeInterval);
+        $hideDialog();
+      }
+    }, 1000);
+  }
+  return commonService;
 }
