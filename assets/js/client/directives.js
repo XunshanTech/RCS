@@ -54,6 +54,7 @@ function rcsTable ($rootScope, $materialDialog, rcsSession, makeOrderGroupFilter
     // scope methods
     $scope.clickManageTable = clickManageTable;
     $scope.clickEditTable = clickEditTable;
+    $scope.clickResetTable = clickResetTable;
     $scope.ifNull = ifNull;
     $scope.ifEmpty = ifEmpty;
     $scope.ifServing = ifServing;
@@ -96,6 +97,13 @@ function rcsTable ($rootScope, $materialDialog, rcsSession, makeOrderGroupFilter
     function initializeTable () {
       $scope.table = rcsSession.getTable(mapRow, mapCol);
       $scope.safeApply();
+    }
+
+    function clickResetTable(event) {
+      event.stopPropagation();
+      rcsSession.resetTable($scope.table, function success (resTable) {
+        toastTable('翻桌', resTable);
+      }, errorAction);
     }
 
     function clickManageTable (event) {
