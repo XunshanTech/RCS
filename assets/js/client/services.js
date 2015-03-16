@@ -782,6 +782,14 @@ function rcsHttp ($rootScope, $http, $state, $log, RCS_EVENT) {
           RestaurantId: restaurantId
         })
         .error(errorAction);
+    },
+    bindTables: function(restaurantId, waiterId, tableIds) {
+      return $http
+        .post('Waiter/update/' + waiterId, {
+          RestaurantId: restaurantId,
+          TableIds: tableIds
+        })
+        .error(errorAction);
     }
   }
 

@@ -979,6 +979,7 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
   $scope.clickDeleteWaiter = clickDeleteWaiter;
   $scope.clickToggleOnline = clickToggleOnline;
   $scope.ifDisableAddWaiter = ifDisableAddWaiter;
+  $scope.clickEditWaiterTables = clickEditWaiterTables;
 
   // initialize
   if (!rcsSession.getSelectedRestaurant()) {
@@ -993,6 +994,7 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
     return rcsHttp.Restaurant.listWaiter(restaurantId)
       .success(function (res) {
         $scope.waiters = res.Waiters;
+        console.log(res.Waiters);
       })
   }
 
@@ -1041,6 +1043,64 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
       }]
     };
     $materialDialog(dialogDelete);
+  }
+
+  function clickEditWaiterTables(waiter) {
+    var waiterIndex = $scope.waiters.indexOf(waiter);
+    var $rootScope = $scope;
+
+    var dialogEditWaiterTables = {
+      templateUrl: 'template/dialog-editWaiterTables',
+      targetEvent: event,
+      controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
+        $scope.waiterName = waiter.Name;
+        $scope.clickBindWaiterTables = clickBindWaiterTables;
+        $scope.clickCancel = clickCancel;
+        $scope.clickSelTable = clickSelTable;
+
+        var tables = rcsSession.getTables();
+        for(var i = 0; i < waiter.Tables.length; i++) {
+          for(var j = 0; j < tables.length; j++) {
+            var rowFlag = false;
+            for(var k = 0; k < tables[j].length; k++) {
+              if(waiter.Tables[i].id === tables[j][k].id) {
+                tables[j][k].sel = true;
+                rowFlag = true;
+                break;
+              }
+            }
+            if(rowFlag) break;
+          }
+        }
+        $scope.tables = tables;
+
+        function clickSelTable(table) {
+          table.sel = !table.sel || false;
+        }
+
+        function clickBindWaiterTables () {
+          var selTableIds = [], selTables = [];
+          var tables = $scope.tables;
+          for(var i = 0; i < tables.length; i++) {
+            for(var j = 0; j < tables[i].length; j++) {
+              if(tables[i][j] && tables[i][j].sel) {
+                selTableIds.push(tables[i][j].id);
+                selTables.push(tables[i][j]);
+              }
+            }
+          }
+
+          $rootScope.waiters[waiterIndex].Tables = selTables;
+          rcsHttp.Waiter.bindTables(restaurantId, waiter.id, selTableIds);
+          $hideDialog();
+        }
+
+        function clickCancel () {
+          $hideDialog();
+        }
+      }]
+    };
+    $materialDialog(dialogEditWaiterTables);
   }
 
   function clickToggleOnline (waiter) {

@@ -9,7 +9,8 @@
 #dialog-manageTable material-button,
 #dialog-editMenuType material-button,
 #dialog-editMenuFlavor material-button,
-#dialog-editFlavorRequirements material-button {
+#dialog-editFlavorRequirements material-button,
+#dialog-editWaiterTables {
   font-size: 18px;
 }
 
@@ -201,4 +202,34 @@
 #dialog-editFlavorRequirements .material-tile-content input {
   border-color: #8A1717;
   border-bottom-width: 2px;
+}
+
+#dialog-editWaiterTables .waiter-table {
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  margin: 0 5px 5px 0;
+  font-size: 14px;
+  text-align: center;
+  padding-top: 10px;
+  cursor: pointer;
+}
+#dialog-editWaiterTables .waiter-table.sel {
+  background-color: #8a1717;
+  color: #fff;
+}
+#dialog-editWaiterTables .dialog-content {
+  overflow-y: scroll;
+}
+#dialog-editWaiterTables .title {
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#dialog-editWaiterTables .dialog-actions {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#dialog-editWaiterTables .dialog-actions material-button {
+  margin-left: 10px;
 }
