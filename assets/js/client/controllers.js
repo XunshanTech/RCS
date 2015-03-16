@@ -213,6 +213,7 @@ function listRestaurantCtrl ($scope, $state, rcsHttp, rcsSession) {
   // scope fields
   $scope.restaurants = null;
   $scope.selectedIndex = -1;
+  $scope.Role = rcsSession.getSignedInUser().Role;
 
   // scope methods
   $scope.clickGoTo = clickGoTo;
@@ -233,8 +234,11 @@ function listRestaurantCtrl ($scope, $state, rcsHttp, rcsSession) {
       .success(function (res) {
         $scope.restaurants = res.Restaurants;
 
-        if ($scope.restaurants.length == 0 && rcsSession.getSignedInUser().Role == 'manager') {
+        if ($scope.restaurants.length == 0 && $scope.Role == 'manager') {
           return $state.go('page.restaurant.new');
+        } else if($scope.restaurants.length > 0 && $scope.Role !== 'manager') {
+          $scope.selectedIndex = 0;
+          $scope.clickGoTo();
         }
       });
   }
