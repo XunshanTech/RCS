@@ -404,25 +404,33 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
     $(audio).appendTo('body');
   }
 
+  var _isPlaying = false;
+
   var play = function() {
-    if(window.playInterval) window.clearInterval(window.playInterval);
-    window.playInterval = window.setInterval(function() {
-      if(playList.length === 0) return window.clearInterval(window.playInterval);
-      var request = playList[0];
-      playSound(request);
-      request.playCount = request.playCount || 0;
-      request.playCount++;
-      // if played 2 times, and kill it
-      if(request.playCount === 2) {
-        playList.splice(0, 1);
-        rcsSession.soundPlay(request.id);
-        switch(request.Type) {
-          case REQUEST_TYPE.call:
-          case REQUEST_TYPE.water:
-            rcsSession.closeRequest(request)
-        }
+    var _baseTime = 3000;
+    if(playList.length === 0) {
+      window.setTimeout(function() {
+        _isPlaying = false;
+      }, _baseTime);
+      return ;
+    }
+    _isPlaying = true;
+    var _gapTime = _baseTime;
+    var _request = playList[0];
+    playSound(_request);
+    _request.playCount = _request.playCount || 0;
+    _request.playCount++;
+    if(_request.playCount === 2) {
+      _gapTime = _baseTime + 1000;
+      playList.splice(0, 1);
+      rcsSession.soundPlay(_request.id);
+      switch(_request.Type) {
+        case REQUEST_TYPE.call:
+        case REQUEST_TYPE.water:
+          rcsSession.closeRequest(_request);
       }
-    }, 5000);
+    }
+    window.setTimeout(play, _gapTime);
   }
 
   var getRequestTypeText = function(request) {
@@ -460,7 +468,16 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
         }
       }
     }
-    play();
+    var _checkPlay = function() {
+      window.setTimeout(function() {
+        if(_isPlaying) {
+          _checkPlay();
+          return;
+        }
+        play();
+      }, 100);
+    }
+    _checkPlay();
   }
 
   // initialize
