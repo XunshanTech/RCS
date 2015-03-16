@@ -93,6 +93,9 @@
   width: 100%;
   top: 2px;
   font-size: 10px;
+  display: block;
+  color: #fff;
+  text-decoration: underline;
 }
 
 #tables .rcs-table > .rcs-table-mark {
