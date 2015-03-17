@@ -213,16 +213,18 @@ function listRestaurantCtrl ($scope, $state, rcsHttp, rcsSession) {
   // scope fields
   $scope.restaurants = null;
   $scope.selectedIndex = -1;
-  $scope.Role = rcsSession.getSignedInUser().Role;
+  var signedInUser = rcsSession.getSignedInUser();
+
+  // initialize
+  if (!signedInUser) {
+    return $state.go('page.signin');
+  }
+
+  $scope.Role = signedInUser.Role;
 
   // scope methods
   $scope.clickGoTo = clickGoTo;
   $scope.clickRestaurant = clickRestaurant;
-
-  // initialize
-  if (!rcsSession.getSignedInUser()) {
-    return $state.go('page.signin');
-  }
 
   rcsSession.unselectRestaurant(function () {
     initializeRestaurants();

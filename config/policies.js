@@ -68,6 +68,7 @@ module.exports.policies = {
     'list': ['isAuthenticated', 'hasRestaurantPermission'],
     'create': ['isAuthenticated', 'hasRestaurantPermission'],
     'link': ['isAuthenticated', 'hasTablePermission'],
+    'checkLink': true,
     'delete': ['isAuthenticated', 'hasTablePermission'],
     'book': ['isAuthenticated', 'hasTablePermission'],
     'cancelBook': ['isAuthenticated', 'hasTablePermission'],
