@@ -1,0 +1,20 @@
+div(id="topSale" flex layout="vertical" layout-fill)
+  .row
+    .col-md-6.top-sale-col
+      .panel.panel-default
+        .panel-heading 本月最受欢迎菜
+        ul.list-group
+          - var foods = [{img:'001',name:'北京烤鸭'},{img:'002',name:'东坡肘子'},{img:'003',name:'麻婆豆腐'},{img:'004',name:'酸辣蕨根粉'},{img:'005',name:'水煮鱼'}]
+          - each food, index in foods
+            li.list-group-item
+              .top-sale-item-title #{index + 1}. #{food.name}
+              img(src='/images/food/#{food.img}.png')
+    .col-md-6.top-sale-col
+      .panel.panel-default
+        .panel-heading 历史最受欢迎菜
+        ul.list-group
+          - var foods = [{img:'005',name:'水煮鱼'},{img:'004',name:'酸辣蕨根粉'},{img:'003',name:'麻婆豆腐'},{img:'001',name:'北京烤鸭'},{img:'002',name:'东坡肘子'}]
+          - each food, index in foods
+            li.list-group-item
+              .top-sale-item-title #{index + 1}. #{food.name}
+              img(src='/images/food/#{food.img}.png')

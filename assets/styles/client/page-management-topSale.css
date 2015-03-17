@@ -1,0 +1,21 @@
+#topSale {
+  padding: 30px;
+}
+#topSale .panel-heading {
+  background-color: #D3CFCA;
+  background-image: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+#topSale .list-group-item {
+  padding: 20px;
+  text-align: center;
+}
+#topSale .list-group-item img {
+  max-width: 100%;
+}
+#topSale .top-sale-item-title {
+  font-weight: bold;
+  font-size: 18px;
+  padding-bottom: 10px;
+}

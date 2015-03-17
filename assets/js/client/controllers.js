@@ -10,6 +10,7 @@ angular
   .controller('monitorWaiterCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', monitorWaiterCtrl])
   .controller('authorMenuCtrl', ['$scope', '$state', '$timeout', '$materialDialog', 'rcsHttp', 'rcsSession', 'makeArrayTextFilter', 'makeNumberFilter', authorMenuCtrl])
   .controller('arrangeWaiterCtrl', ['$scope', '$state', '$materialDialog', 'rcsHttp', 'rcsSession', arrangeWaiterCtrl])
+  .controller('topSaleCtrl', ['$scope', topSaleCtrl])
   .controller('assignAdminCtrl', ['$scope', '$state', '$materialDialog', 'rcsHttp', 'rcsSession', assignAdminCtrl]);
 
 // shared
@@ -1143,6 +1144,10 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
   function ifDisableAddWaiter () {
     return !$scope.newWaiterName || $scope.waiters.indexOf($scope.newWaiterName) != -1;
   }
+}
+
+function topSaleCtrl($scope) {
+
 }
 
 function assignAdminCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession) {

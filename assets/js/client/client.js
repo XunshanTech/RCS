@@ -122,6 +122,15 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
           title: '服务员'
         }
       }, {
+        name: 'topSale',
+        url: '/management/topSale',
+        templateUrl: '/template/page-management-topSale',
+        controller: 'topSaleCtrl',
+        data: {
+          icon: 'trophy',
+          title: '销量榜'
+        }
+      }, {
         name: 'assignAdmin',
         url: '/management/assignAdmin',
         templateUrl: '/template/page-management-assignAdmin',
