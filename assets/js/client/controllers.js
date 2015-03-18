@@ -413,9 +413,11 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
 
   var _isPlaying = false;
 
+  var _unPlayList = [];
+
   var play = function() {
     var _baseTime = 3000;
-    if(playList.length === 0) {
+    if(_unPlayList.length === 0) {
       window.setTimeout(function() {
         _isPlaying = false;
       }, _baseTime);
@@ -423,19 +425,19 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
     }
     _isPlaying = true;
     var _gapTime = _baseTime;
-    var _request = playList[0];
+    var _request = _unPlayList[0];
     playSound(_request);
     _request.playCount = _request.playCount || 0;
     _request.playCount++;
     if(_request.playCount === 2) {
       _gapTime = _baseTime + 1000;
-      playList.splice(0, 1);
       rcsSession.soundPlay(_request.id);
       switch(_request.Type) {
         case REQUEST_TYPE.call:
         case REQUEST_TYPE.water:
           rcsSession.closeRequest(_request);
       }
+      _unPlayList.splice(0, 1);
     }
     window.setTimeout(play, _gapTime);
   }
@@ -472,6 +474,7 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
         }
         if(!_hasInPlayList) {
           window.playList.push(request);
+          _unPlayList.push(request);
         }
       }
     }
@@ -482,7 +485,7 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
           return;
         }
         play();
-      }, 100);
+      }, 300);
     }
     _checkPlay();
   }
