@@ -181,6 +181,23 @@ module.exports = {
     });
   },
 
+  checkLink: function(req, res) {
+    var tableId = req.param('id');
+    var linkedTabletId = req.body.LinkedTabletId;
+
+    if (!linkedTabletId) {
+      return res.badRequest('Missing required fields: ' + linkedTabletId)
+    }
+    Table.find({
+      id: tableId,
+      LinkedTabletId: linkedTabletId
+    }).exec(function(err, tables) {
+        res.json({
+          link: tables.length > 0 && true
+        });
+      });
+  },
+
   removeLink: function (req, res) {
     updateTable(req, res, req.param('id'), {
       LinkedTabletId: null,

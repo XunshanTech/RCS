@@ -393,13 +393,12 @@ module.exports = {
   listWaiter: function (req, res) {
     var restaurantId = req.body.RestaurantId;
 
-    Restaurant.findOneById(restaurantId).populate('Waiters').exec(function (err, restaurant) {
-      if (err) {
+    Waiter.find({Restaurant: restaurantId}).populate('Tables').exec(function(err, waiters) {
+      if(err) {
         return res.serverError(err);
       }
-
       return res.json({
-        Waiters: restaurant.Waiters
+        Waiters: waiters
       });
     });
   },

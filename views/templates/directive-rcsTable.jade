@@ -19,11 +19,14 @@ material-button.rcs-table(
   tooltip-placement="left"
   tooltip-popup-delay="100"
   tooltip-html-unsafe="{{getTooltip()}}")
+  a.rcs-table-top(ng-if='ifPaid()', ng-click='clickResetTable($event)') 点此翻桌
   .rcs-table-mark(ng-show="ifHasRequest()").fa.fa-bell
   .rcs-table-text {{getTableName()}}
 material-button.rcs-table(
   ng-if="editingTable===true"
   ng-click="clickEditTable($event)"
+  ng-dblclick='dblclickResetTable($event)'
   ng-class=editModeClass)
+  a.rcs-table-top(ng-if='ifPaid()', ng-click='clickResetTable($event)') 点此翻桌
   .rcs-table-mark.fa.fa-plus(ng-show="ifNull()===true")
   .rcs-table-text(ng-show="ifNull()===false") {{getTableName()}}

@@ -10,6 +10,7 @@ angular
   .controller('monitorWaiterCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', monitorWaiterCtrl])
   .controller('authorMenuCtrl', ['$scope', '$state', '$timeout', '$materialDialog', 'rcsHttp', 'rcsSession', 'makeArrayTextFilter', 'makeNumberFilter', authorMenuCtrl])
   .controller('arrangeWaiterCtrl', ['$scope', '$state', '$materialDialog', 'rcsHttp', 'rcsSession', arrangeWaiterCtrl])
+  .controller('topSaleCtrl', ['$scope', topSaleCtrl])
   .controller('assignAdminCtrl', ['$scope', '$state', '$materialDialog', 'rcsHttp', 'rcsSession', assignAdminCtrl]);
 
 // shared
@@ -213,15 +214,18 @@ function listRestaurantCtrl ($scope, $state, rcsHttp, rcsSession) {
   // scope fields
   $scope.restaurants = null;
   $scope.selectedIndex = -1;
+  var signedInUser = rcsSession.getSignedInUser();
+
+  // initialize
+  if (!signedInUser) {
+    return $state.go('page.signin');
+  }
+
+  $scope.Role = signedInUser.Role;
 
   // scope methods
   $scope.clickGoTo = clickGoTo;
   $scope.clickRestaurant = clickRestaurant;
-
-  // initialize
-  if (!rcsSession.getSignedInUser()) {
-    return $state.go('page.signin');
-  }
 
   rcsSession.unselectRestaurant(function () {
     initializeRestaurants();
@@ -233,8 +237,11 @@ function listRestaurantCtrl ($scope, $state, rcsHttp, rcsSession) {
       .success(function (res) {
         $scope.restaurants = res.Restaurants;
 
-        if ($scope.restaurants.length == 0 && rcsSession.getSignedInUser().Role == 'manager') {
+        if ($scope.restaurants.length == 0 && $scope.Role == 'manager') {
           return $state.go('page.restaurant.new');
+        } else if($scope.restaurants.length > 0 && $scope.Role !== 'manager') {
+          $scope.selectedIndex = 0;
+          $scope.clickGoTo();
         }
       });
   }
@@ -404,25 +411,33 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
     $(audio).appendTo('body');
   }
 
+  var _isPlaying = false;
+
   var play = function() {
-    if(window.playInterval) window.clearInterval(window.playInterval);
-    window.playInterval = window.setInterval(function() {
-      if(playList.length === 0) return window.clearInterval(window.playInterval);
-      var request = playList[0];
-      playSound(request);
-      request.playCount = request.playCount || 0;
-      request.playCount++;
-      // if played 2 times, and kill it
-      if(request.playCount === 2) {
-        playList.splice(0, 1);
-        rcsSession.soundPlay(request.id);
-        switch(request.Type) {
-          case REQUEST_TYPE.call:
-          case REQUEST_TYPE.water:
-            rcsSession.closeRequest(request)
-        }
+    var _baseTime = 3000;
+    if(playList.length === 0) {
+      window.setTimeout(function() {
+        _isPlaying = false;
+      }, _baseTime);
+      return ;
+    }
+    _isPlaying = true;
+    var _gapTime = _baseTime;
+    var _request = playList[0];
+    playSound(_request);
+    _request.playCount = _request.playCount || 0;
+    _request.playCount++;
+    if(_request.playCount === 2) {
+      _gapTime = _baseTime + 1000;
+      playList.splice(0, 1);
+      rcsSession.soundPlay(_request.id);
+      switch(_request.Type) {
+        case REQUEST_TYPE.call:
+        case REQUEST_TYPE.water:
+          rcsSession.closeRequest(_request);
       }
-    }, 5000);
+    }
+    window.setTimeout(play, _gapTime);
   }
 
   var getRequestTypeText = function(request) {
@@ -460,7 +475,16 @@ function monitorRequestCtrl ($rootScope, $scope, rcsSession, RCS_EVENT, REQUEST_
         }
       }
     }
-    play();
+    var _checkPlay = function() {
+      window.setTimeout(function() {
+        if(_isPlaying) {
+          _checkPlay();
+          return;
+        }
+        play();
+      }, 100);
+    }
+    _checkPlay();
   }
 
   // initialize
@@ -979,6 +1003,7 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
   $scope.clickDeleteWaiter = clickDeleteWaiter;
   $scope.clickToggleOnline = clickToggleOnline;
   $scope.ifDisableAddWaiter = ifDisableAddWaiter;
+  $scope.clickEditWaiterTables = clickEditWaiterTables;
 
   // initialize
   if (!rcsSession.getSelectedRestaurant()) {
@@ -993,6 +1018,7 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
     return rcsHttp.Restaurant.listWaiter(restaurantId)
       .success(function (res) {
         $scope.waiters = res.Waiters;
+        console.log(res.Waiters);
       })
   }
 
@@ -1043,6 +1069,64 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
     $materialDialog(dialogDelete);
   }
 
+  function clickEditWaiterTables(waiter) {
+    var waiterIndex = $scope.waiters.indexOf(waiter);
+    var $rootScope = $scope;
+
+    var dialogEditWaiterTables = {
+      templateUrl: 'template/dialog-editWaiterTables',
+      targetEvent: event,
+      controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
+        $scope.waiterName = waiter.Name;
+        $scope.clickBindWaiterTables = clickBindWaiterTables;
+        $scope.clickCancel = clickCancel;
+        $scope.clickSelTable = clickSelTable;
+
+        var tables = rcsSession.getTables();
+        for(var i = 0; i < waiter.Tables.length; i++) {
+          for(var j = 0; j < tables.length; j++) {
+            var rowFlag = false;
+            for(var k = 0; k < tables[j].length; k++) {
+              if(waiter.Tables[i].id === tables[j][k].id) {
+                tables[j][k].sel = true;
+                rowFlag = true;
+                break;
+              }
+            }
+            if(rowFlag) break;
+          }
+        }
+        $scope.tables = tables;
+
+        function clickSelTable(table) {
+          table.sel = !table.sel || false;
+        }
+
+        function clickBindWaiterTables () {
+          var selTableIds = [], selTables = [];
+          var tables = $scope.tables;
+          for(var i = 0; i < tables.length; i++) {
+            for(var j = 0; j < tables[i].length; j++) {
+              if(tables[i][j] && tables[i][j].sel) {
+                selTableIds.push(tables[i][j].id);
+                selTables.push(tables[i][j]);
+              }
+            }
+          }
+
+          $rootScope.waiters[waiterIndex].Tables = selTables;
+          rcsHttp.Waiter.bindTables(restaurantId, waiter.id, selTableIds);
+          $hideDialog();
+        }
+
+        function clickCancel () {
+          $hideDialog();
+        }
+      }]
+    };
+    $materialDialog(dialogEditWaiterTables);
+  }
+
   function clickToggleOnline (waiter) {
     var i = $scope.waiters.indexOf(waiter);
 
@@ -1060,6 +1144,10 @@ function arrangeWaiterCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession)
   function ifDisableAddWaiter () {
     return !$scope.newWaiterName || $scope.waiters.indexOf($scope.newWaiterName) != -1;
   }
+}
+
+function topSaleCtrl($scope) {
+
 }
 
 function assignAdminCtrl($scope, $state, $materialDialog, rcsHttp, rcsSession) {

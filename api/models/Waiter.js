@@ -28,6 +28,12 @@ module.exports = {
       model: 'restaurant'
     },
 
+    Tables: { // Many to many
+      collection: 'table',
+      via: 'WaiterTable',
+      dominant: true
+    },
+
     toJSON: function() {
       var obj = this.toObject();
 
