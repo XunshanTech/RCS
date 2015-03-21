@@ -86,6 +86,16 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
           title: '新建餐厅',
           authorization: [USER_ROLE.manager]
         }
+      }, {
+        name: 'data',
+        url: '/restaurant/listData',
+        templateUrl: '',
+        controller: '',
+        data: {
+          icon: 'line-chart',
+          title: '数据统计',
+          authorization: [USER_ROLE.manager]
+        }
       }]
     }, {
       name: 'management',
