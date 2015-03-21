@@ -4,6 +4,7 @@ angular
   .controller('signInCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'ERROR_MESSAGE', signInCtrl])
   .controller('listRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', listRestaurantCtrl])
   .controller('newRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', newRestaurantCtrl])
+  .controller('restaurantDataCtrl', ['$scope', restaurantDataCtrl])
   .controller('monitorCtrl', ['$rootScope', '$scope', '$state', 'rcsSession', 'RCS_EVENT', monitorCtrl])
   .controller('monitorTableCtrl', ['$scope', 'rcsSession', monitorTableCtrl])
   .controller('monitorRequestCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', 'REQUEST_TYPE', monitorRequestCtrl])
@@ -311,6 +312,10 @@ function newRestaurantCtrl($scope, $state, rcsHttp, rcsSession) {
     $scope.admins.push($scope.newAdmin);
     $scope.newAdmin = '';
   }
+}
+
+function restaurantDataCtrl() {
+
 }
 
 function monitorCtrl ($rootScope, $scope, $state, rcsSession, RCS_EVENT) {

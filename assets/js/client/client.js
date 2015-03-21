@@ -89,8 +89,8 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
       }, {
         name: 'data',
         url: '/restaurant/listData',
-        templateUrl: '',
-        controller: '',
+        templateUrl: '/template/page-restaurant-data',
+        controller: 'restaurantDataCtrl',
         data: {
           icon: 'line-chart',
           title: '数据统计',
