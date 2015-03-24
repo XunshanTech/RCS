@@ -239,7 +239,8 @@ module.exports = {
   },
 
   data: function(req, res) {
-    restaurantAnalytics.data(function(results) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.data(restaurantId, function(results) {
       return res.json(results);
     });
   },
