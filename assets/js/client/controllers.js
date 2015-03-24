@@ -4,7 +4,7 @@ angular
   .controller('signInCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'ERROR_MESSAGE', signInCtrl])
   .controller('listRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', listRestaurantCtrl])
   .controller('newRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', newRestaurantCtrl])
-  .controller('restaurantDataCtrl', ['$scope', restaurantDataCtrl])
+  .controller('restaurantDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', restaurantDataCtrl])
   .controller('monitorCtrl', ['$rootScope', '$scope', '$state', 'rcsSession', 'RCS_EVENT', monitorCtrl])
   .controller('monitorTableCtrl', ['$scope', 'rcsSession', monitorTableCtrl])
   .controller('monitorRequestCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', 'REQUEST_TYPE', monitorRequestCtrl])
@@ -314,8 +314,29 @@ function newRestaurantCtrl($scope, $state, rcsHttp, rcsSession) {
   }
 }
 
-function restaurantDataCtrl() {
+function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
+  $scope.restaurants = null;
+  $scope.selectedIndex = 0;
+  var signedInUser = rcsSession.getSignedInUser();
 
+  // initialize
+  if (!signedInUser) {
+    return $state.go('page.signin');
+  }
+
+  function initializeRestaurants () {
+    return rcsHttp.Restaurant.list()
+      .success(function (res) {
+        $scope.restaurants = res.Restaurants;
+      });
+  }
+  initializeRestaurants();
+
+  $scope.clickRestaurants = clickRestaurants;
+
+  function clickRestaurants(index) {
+    $scope.selectedIndex = index;
+  }
 }
 
 function monitorCtrl ($rootScope, $scope, $state, rcsSession, RCS_EVENT) {
