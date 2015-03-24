@@ -328,6 +328,9 @@ function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
     return rcsHttp.Restaurant.list()
       .success(function (res) {
         $scope.restaurants = res.Restaurants;
+        if(res.Restaurants.length > 0) {
+          clickRestaurants(0);
+        }
       });
   }
   initializeRestaurants();
@@ -336,6 +339,7 @@ function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
 
   function clickRestaurants(index) {
     $scope.selectedIndex = index;
+    getData($scope.restaurants[index].id);
   }
 }
 
