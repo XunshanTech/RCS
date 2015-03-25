@@ -1,0 +1,21 @@
+form.restaurant-data-form
+  label.radio-inline(ng-repeat="restaurant in restaurants")
+    input#restaurant-list-radio(type="radio", name="inlineRadioOptions",
+      value="$index", ng-click='clickRestaurants($index)')
+    |{{restaurant.RestaurantName}}
+.analytics
+  .row
+    .col-md-6
+      .panel
+        .analytics-title 使用本系统，最近30天可节省时间成本
+        .analytics-circle-wrap.img-circle
+          .analytics-circle 4
+            span 小时
+            | 45
+            span 分
+    .col-md-6
+      .panel
+        .analytics-title 使用本系统，最近30天可节省人力成本
+        .analytics-circle-wrap.img-circle
+          .analytics-circle 8400
+            span 元
