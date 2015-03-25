@@ -35,7 +35,6 @@ module.exports = {
         results.sort(function(a, b) {
           return a.createdAt - b.createdAt;
         })
-        console.log(results);
         return cb(results);
       })
     });
