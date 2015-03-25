@@ -55,6 +55,7 @@ module.exports.policies = {
     'addAdmin': ['isAuthenticated', 'isManager', 'hasRestaurantPermission'],
     'data': ['isAuthenticated', 'isManager', 'hasRestaurantPermission'],
     'data30': ['isAuthenticated', 'isManager', 'hasRestaurantPermission'],
+    'person30': ['isAuthenticated', 'isManager', 'hasRestaurantPermission'],
     'removeAdmin': ['isAuthenticated', 'isManager', 'hasRestaurantPermission'],
     'listAdmin': ['isAuthenticated', 'isManager', 'hasRestaurantPermission'],
     'checkMenuVersion': ['isAuthenticated', 'hasRestaurantPermission'],

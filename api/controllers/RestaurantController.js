@@ -252,6 +252,13 @@ module.exports = {
     })
   },
 
+  person30: function(req, res) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.person30(restaurantId, function(results) {
+      return res.json(results);
+    })
+  },
+
   list: function (req, res) {
     var currentUser = req.session.user;
 

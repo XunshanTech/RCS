@@ -24,6 +24,30 @@ var Analytics = (function() {
     return text;
   };
 
+  var get30Person = function(restaurantId) {
+    $.ajax({
+      url: '/Restaurant/person30',
+      dataType: 'json',
+      data: {
+        RestaurantId: restaurantId
+      },
+      method: 'post',
+      success: function(result) {
+        if(result && result.length > 0) {
+          var resultIndex = result.length >= 2 ? 1 : 0;
+          var newSecond = result[resultIndex].new;
+          var oldSecond = (result.sort(function(a, b) {
+            return b.old - a.old;
+          }))[resultIndex].old;
+          var second = oldSecond - newSecond;
+          //4500 is one person get money / month
+          var money = parseInt(second / 300 * 4500);
+          $('#analytics-person-30').html(money + '<span>元</span>');
+        }
+      }
+    })
+  };
+
   var get30Data = function(restaurantId) {
     $.ajax({
       url: '/Restaurant/data30',
@@ -62,21 +86,16 @@ var Analytics = (function() {
     // create the chart when all data is loaded
     var createChart = function () {
       $('#data-container').highcharts('StockChart', {
-
         rangeSelector: {
           enabled: false
         },
-
         credits: false,
-
         exporting: {
           enabled: false
         },
-
         chart: {
           width: $('#data-container').width()
         },
-
         navigator: {
           xAxis: {
             dateTimeLabelFormats: {
@@ -87,13 +106,11 @@ var Analytics = (function() {
             }
           }
         },
-
         xAxis: {
           dateTimeLabelFormats: {
             day: '%b%e日'
           }
         },
-
         yAxis: {
           min: 0,
           labels: {
@@ -106,7 +123,6 @@ var Analytics = (function() {
             width: 2
           }]
         },
-
         tooltip: {
           pointFormatter: function() {
             var seriesColor = this.series.color;
@@ -120,7 +136,6 @@ var Analytics = (function() {
             day:"%Y年%b%e日,%A"
           }
         },
-
         series: seriesOptions
       });
     };
@@ -147,6 +162,7 @@ var Analytics = (function() {
 
   return {
     getData: getData,
-    get30Data: get30Data
+    get30Data: get30Data,
+    get30Person: get30Person
   }
 }).call(this);

@@ -341,6 +341,7 @@ function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
   function clickRestaurants(index) {
     $scope.selectedIndex = index;
     Analytics.get30Data($scope.restaurants[index].id);
+    Analytics.get30Person($scope.restaurants[index].id);
   }
 }
 
