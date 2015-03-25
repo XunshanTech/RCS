@@ -7,15 +7,14 @@ form.restaurant-data-form
   .row
     .col-md-6
       .panel
-        .analytics-title 使用本系统，最近30天可节省时间成本
+        .analytics-title 使用本系统后，近30天可节省时间成本
         .analytics-circle-wrap.img-circle
-          .analytics-circle 4
-            span 小时
-            | 45
-            span 分
+          #analytics-data-30.analytics-circle
     .col-md-6
       .panel
-        .analytics-title 使用本系统，最近30天可节省人力成本
+        .analytics-title 使用本系统后，近30天可节省人力成本
         .analytics-circle-wrap.img-circle
           .analytics-circle 8400
             span 元
+
+script(src='/js/data-chart.js')

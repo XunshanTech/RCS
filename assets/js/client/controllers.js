@@ -340,7 +340,7 @@ function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
 
   function clickRestaurants(index) {
     $scope.selectedIndex = index;
-    //getData($scope.restaurants[index].id);
+    Analytics.get30Data($scope.restaurants[index].id);
   }
 }
 
@@ -370,7 +370,7 @@ function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
 
   function clickRestaurants(index) {
     $scope.selectedIndex = index;
-    getData($scope.restaurants[index].id);
+    Analytics.getData($scope.restaurants[index].id);
   }
 }
 

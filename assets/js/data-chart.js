@@ -1,115 +1,152 @@
-var getData = function(restaurantId) {
-  var dataFormat = function(s) {
-    var m = parseInt(s / 60);
-    var s = (s % 60);
-    var text = '';
-    if(m > 0) {
-      text += m + '分';
+var Analytics = (function() {
+  var dataFormat = function(s, homeShow) {
+    homeShow = typeof homeShow === 'undefined' ? false : (homeShow && true);
+    var spanLeft = homeShow ? '<span>' : '';
+    var spanRight = homeShow ? '</span>' : '';
+    var unit = {
+      h: spanLeft + '小时' + spanRight,
+      m: spanLeft + '分' + spanRight,
+      s: spanLeft + '秒' + spanRight
     }
-    if(s > 0 || (s === 0 && m === 0)) {
-      text += s + '秒';
+    var h = parseInt(s / 3600);
+    var m = parseInt((s % 3600) / 60);
+    var s = s % 60;
+    var text = '';
+    if(h > 0) {
+      text += h + unit.h;
+    }
+    if(m > 0) {
+      text += m + unit.m;
+    }
+    if((s > 0 || (s === 0 && m === 0 && h === 0)) && !homeShow) {
+      text += s + unit.s;
     }
     return text;
   };
 
-  Highcharts.setOptions({
-    lang: {
-      weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-      shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-    }
-  });
-
-  var seriesOptions = [{
-    name: '原始服务时间',
-    type: 'area',
-    data: []
-  }, {
-    name: '优化服务时间',
-    type: 'area',
-    data: []
-  }];
-  // create the chart when all data is loaded
-  var createChart = function () {
-    $('#data-container').highcharts('StockChart', {
-
-      rangeSelector: {
-        enabled: false
+  var get30Data = function(restaurantId) {
+    $.ajax({
+      url: '/Restaurant/data30',
+      dataType: 'json',
+      data: {
+        RestaurantId: restaurantId
       },
-
-      credits: false,
-
-      exporting: {
-        enabled: false
-      },
-
-      chart: {
-        width: $('#data-container').width()
-      },
-
-      navigator: {
-        xAxis: {
-          dateTimeLabelFormats: {
-            day: '%b%e日',
-            week: '%b%e日',
-            month: '%b%e日',
-            year: '%Y'
-          }
+      method: 'post',
+      success: function(result) {
+        if(result.length > 0) {
+          var ret = dataFormat(result[0].old - result[0].new, true);
+          $('#analytics-data-30').html(ret);
         }
-      },
-
-      xAxis: {
-        dateTimeLabelFormats: {
-          day: '%b%e日'
-        }
-      },
-
-      yAxis: {
-        min: 0,
-        labels: {
-          formatter: function () {
-            return dataFormat(this.value);
-          }
-        },
-        plotLines: [{
-          value: 0,
-          width: 2
-        }]
-      },
-
-      tooltip: {
-        pointFormatter: function() {
-          var seriesColor = this.series.color;
-          var seriesName = this.series.name;
-          var y = dataFormat(this.y);
-          return '<span style="color:' + seriesColor + '">' +
-            seriesName + '</span>: <b>' + y + '</b><br/>';
-        },
-        valueDecimals: 0,
-        dateTimeLabelFormats: {
-          day:"%Y年%b%e日,%A"
-        }
-      },
-
-      series: seriesOptions
-    });
+      }
+    })
   };
 
-  $.ajax({
-    url: '/Restaurant/data',
-    dataType: 'json',
-    data: {
-      RestaurantId: restaurantId
-    },
-    method: 'post',
-    success: function(result) {
-      console.log(result);
-      for(var i = 0; i < result.length; i++) {
-        var ret = result[i];
-        var date = (new Date(ret.date)).getTime();
-        seriesOptions[0].data.push([date, ret.old]);
-        seriesOptions[1].data.push([date, ret.new]);
+  var getData = function(restaurantId) {
+
+    Highcharts.setOptions({
+      lang: {
+        weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+        shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
       }
-      window.setTimeout(createChart, 0);
-    }
-  })
-};
+    });
+
+    var seriesOptions = [{
+      name: '原始服务时间',
+      type: 'area',
+      data: []
+    }, {
+      name: '优化服务时间',
+      type: 'area',
+      data: []
+    }];
+    // create the chart when all data is loaded
+    var createChart = function () {
+      $('#data-container').highcharts('StockChart', {
+
+        rangeSelector: {
+          enabled: false
+        },
+
+        credits: false,
+
+        exporting: {
+          enabled: false
+        },
+
+        chart: {
+          width: $('#data-container').width()
+        },
+
+        navigator: {
+          xAxis: {
+            dateTimeLabelFormats: {
+              day: '%b%e日',
+              week: '%b%e日',
+              month: '%b%e日',
+              year: '%Y'
+            }
+          }
+        },
+
+        xAxis: {
+          dateTimeLabelFormats: {
+            day: '%b%e日'
+          }
+        },
+
+        yAxis: {
+          min: 0,
+          labels: {
+            formatter: function () {
+              return dataFormat(this.value);
+            }
+          },
+          plotLines: [{
+            value: 0,
+            width: 2
+          }]
+        },
+
+        tooltip: {
+          pointFormatter: function() {
+            var seriesColor = this.series.color;
+            var seriesName = this.series.name;
+            var y = dataFormat(this.y);
+            return '<span style="color:' + seriesColor + '">' +
+              seriesName + '</span>: <b>' + y + '</b><br/>';
+          },
+          valueDecimals: 0,
+          dateTimeLabelFormats: {
+            day:"%Y年%b%e日,%A"
+          }
+        },
+
+        series: seriesOptions
+      });
+    };
+
+    $.ajax({
+      url: '/Restaurant/data',
+      dataType: 'json',
+      data: {
+        RestaurantId: restaurantId
+      },
+      method: 'post',
+      success: function(result) {
+        console.log(result);
+        for(var i = 0; i < result.length; i++) {
+          var ret = result[i];
+          var date = (new Date(ret.date)).getTime();
+          seriesOptions[0].data.push([date, ret.old]);
+          seriesOptions[1].data.push([date, ret.new]);
+        }
+        window.setTimeout(createChart, 0);
+      }
+    })
+  };
+
+  return {
+    getData: getData,
+    get30Data: get30Data
+  }
+}).call(this);

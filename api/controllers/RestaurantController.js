@@ -245,6 +245,13 @@ module.exports = {
     });
   },
 
+  data30: function(req, res) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.data30(restaurantId, function(results) {
+      return res.json(results);
+    })
+  },
+
   list: function (req, res) {
     var currentUser = req.session.user;
 
