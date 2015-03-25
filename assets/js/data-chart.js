@@ -1,4 +1,17 @@
 var getData = function(restaurantId) {
+  var dataFormat = function(s) {
+    var m = parseInt(s / 60);
+    var s = (s % 60);
+    var text = '';
+    if(m > 0) {
+      text += m + '分';
+    }
+    if(s > 0 || (s === 0 && m === 0)) {
+      text += s + '秒';
+    }
+    return text;
+  };
+
   Highcharts.setOptions({
     lang: {
       weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
@@ -54,16 +67,7 @@ var getData = function(restaurantId) {
         min: 0,
         labels: {
           formatter: function () {
-            var m = parseInt(this.value / 60);
-            var s = (this.value % 60);
-            var text = '';
-            if(m > 0) {
-              text += m + '分';
-            }
-            if(s > 0 || (s === 0 && m === 0)) {
-              text += s + '秒';
-            }
-            return text;
+            return dataFormat(this.value);
           }
         },
         plotLines: [{
@@ -73,7 +77,13 @@ var getData = function(restaurantId) {
       },
 
       tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}秒</b><br/>',
+        pointFormatter: function() {
+          var seriesColor = this.series.color;
+          var seriesName = this.series.name;
+          var y = dataFormat(this.y);
+          return '<span style="color:' + seriesColor + '">' +
+            seriesName + '</span>: <b>' + y + '</b><br/>';
+        },
         valueDecimals: 0,
         dateTimeLabelFormats: {
           day:"%Y年%b%e日,%A"
