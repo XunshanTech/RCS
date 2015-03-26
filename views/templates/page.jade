@@ -23,7 +23,7 @@ div(id="page" layout="horizontal" layout-fill)
         div(flex)
         material-button.hover(ng-if="ifSelectedRestaurant()===true" ng-click="clickRestaurant()")
           b {{getCurrentRestaurant()}}
-        material-button.hover(ng-if="ifSelectedRestaurant()===true" ng-click="clickSelectRestaurant()")
+        //material-button.hover(ng-if="ifSelectedRestaurant()===true" ng-click="clickSelectRestaurant()")
           u 返回餐厅选择
         material-button.hover(ng-if='ifSubAnalytics()', ng-click='clickAnalytics()')
           u 返回数据统计首页

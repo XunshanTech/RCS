@@ -189,7 +189,8 @@ function signInCtrl ($scope, $state, rcsHttp, rcsSession, ERROR_MESSAGE) {
       $scope.signIn.email,
       $scope.signIn.pwd,
       function () {
-        $state.go('page.restaurant.list');
+        var goLink = rcsSession.getSignedInUser().Role === 'manager' ? 'page.restaurant.analytics' : 'page.restaurant.list';
+        $state.go(goLink);
       },
       function () {
         alert('login failed');
