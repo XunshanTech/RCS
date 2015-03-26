@@ -8,12 +8,14 @@ form.restaurant-data-form
     .col-md-6
       .panel
         .analytics-title 使用本系统后，近30天可节省时间成本
-        .analytics-circle-wrap.img-circle
-          #analytics-data-30.analytics-circle
+        .analytics-circle-wrap.img-circle(ng-click='gotoData()')
+          #analytics-data-30.analytics-circle 0
+            span 分
     .col-md-6
       .panel
         .analytics-title 使用本系统后，近30天可节省人力成本
-        .analytics-circle-wrap.img-circle
-          #analytics-person-30.analytics-circle
+        .analytics-circle-wrap.img-circle(ng-click='gotoPerson()')
+          #analytics-person-30.analytics-circle 0
+            span 元
 
 script(src='/js/data-chart.js')

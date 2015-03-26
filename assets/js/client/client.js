@@ -87,10 +87,21 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
           authorization: [USER_ROLE.manager]
         }
       }, {
-        name: 'data',
+        name: 'analytics',
         url: '/restaurant/analytics',
         templateUrl: '/template/page-restaurant-analytics',
         controller: 'restaurantAnalyticsCtrl',
+        data: {
+          icon: 'line-chart',
+          title: '数据统计',
+          authorization: [USER_ROLE.manager]
+        }
+      }, {
+        name: 'data',
+        url: '/restaurant/data',
+        templateUrl: '/template/page-restaurant-data',
+        controller: 'restaurantDataCtrl',
+        abscract: true,
         data: {
           icon: 'line-chart',
           title: '数据统计',

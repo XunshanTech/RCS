@@ -21,6 +21,7 @@
   background-color: #d9534f;
   text-align: center;
   margin: 40px auto;
+  cursor: pointer;
 }
 .analytics-circle {
   line-height: 260px;

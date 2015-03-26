@@ -5,7 +5,7 @@ div(id="page" layout="horizontal" layout-fill)
         .material-toolbar-tools <b>餐厅管理系统</b>
       material-content(flex)
         a(ng-repeat="navEntry in navEntries | filter:ifCanNav"
-          ui-sref="{{navEntry.name}}" ui-sref-active="active")
+          ui-sref="{{navEntry.name}}", ui-sref-active="active")
           material-button.nav-entry
             i.fa.fa-2x(class="fa-{{navEntry.data.icon}}")
             | {{navEntry.data.title}}

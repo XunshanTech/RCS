@@ -337,11 +337,21 @@ function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
   initializeRestaurants();
 
   $scope.clickRestaurants = clickRestaurants;
+  $scope.gotoData = gotoData;
+  $scope.gotoPerson = gotoPerson;
 
   function clickRestaurants(index) {
     $scope.selectedIndex = index;
     Analytics.get30Data($scope.restaurants[index].id);
     Analytics.get30Person($scope.restaurants[index].id);
+  }
+
+  function gotoData() {
+    $state.go('page.restaurant.data');
+  }
+
+  function gotoPerson() {
+
   }
 }
 
