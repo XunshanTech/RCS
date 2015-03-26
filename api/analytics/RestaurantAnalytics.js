@@ -13,7 +13,7 @@ module.exports = {
       collection.group(function(doc) {
         var date = new Date(doc.createdAt);
         var dateKey = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-        return {'date': dateKey};
+        return {'date': dateKey.getTime()};
       }, {
         'Restaurant': new ObjectID(restaurantId),
         'createdAt': {
@@ -34,6 +34,7 @@ module.exports = {
         }
       }, function(err, results) {
         db.close();
+        console.log(results);
         if(results && results.length > 0) {
           results.sort(function(a, b) {
             return a.createdAt - b.createdAt;
@@ -53,7 +54,7 @@ module.exports = {
         var date = new Date(doc.createdAt);
         var minutes = parseInt(date.getMinutes() / 5) * 5;
         var dateKey = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
-          date.getHours(), minutes);
+          date.getHours(), minutes, 0);
         return {'date': dateKey};
       }, {
         'Restaurant': new ObjectID(restaurantId),

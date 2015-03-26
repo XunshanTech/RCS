@@ -34,6 +34,7 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
   // scope methods
   $scope.clickRestaurant = clickRestaurant;
   $scope.clickSelectRestaurant = clickSelectRestaurant;
+  $scope.clickAnalytics = clickAnalytics;
   $scope.clickSignOut = clickSignOut;
   $scope.clickToggleNav = clickToggleNav;
   $scope.clickUser = clickUser;
@@ -41,6 +42,7 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
   $scope.getCurrentUser = getCurrentUser;
   $scope.ifCanNav = ifCanNav;
   $scope.ifSelectedRestaurant = ifSelectedRestaurant;
+  $scope.ifSubAnalytics = ifSubAnalytics;
   $scope.ifSignedIn = ifSignedIn;
   $scope.simpleToast = simpleToast;
 
@@ -78,6 +80,10 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
     $state.go('page.restaurant.list');
   }
 
+  function clickAnalytics() {
+    $state.go('page.restaurant.analytics');
+  }
+
   function clickUser () {
     $state.go('page.signin');
   }
@@ -92,6 +98,10 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
 
   function ifSelectedRestaurant () {
     return rcsSession.getSelectedRestaurant() != null;
+  }
+
+  function ifSubAnalytics() {
+    return $state.current.showAnalyticsLink && true;
   }
 
   function ifCanNav (navEntry) {

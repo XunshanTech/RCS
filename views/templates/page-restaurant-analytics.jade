@@ -1,6 +1,7 @@
 form.restaurant-data-form
   label.radio-inline(ng-repeat="restaurant in restaurants")
     input#restaurant-list-radio(type="radio", name="inlineRadioOptions",
+      ng-checked='selectedIndex == $index',
       value="$index", ng-click='clickRestaurants($index)')
     |{{restaurant.RestaurantName}}
 .analytics
