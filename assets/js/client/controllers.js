@@ -4,9 +4,9 @@ angular
   .controller('signInCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'ERROR_MESSAGE', signInCtrl])
   .controller('listRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', listRestaurantCtrl])
   .controller('newRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', newRestaurantCtrl])
-  .controller('restaurantAnalyticsCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', restaurantAnalyticsCtrl])
-  .controller('restaurantDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', restaurantDataCtrl])
-  .controller('restaurantPersonDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', restaurantPersonDataCtrl])
+  .controller('restaurantAnalyticsCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'rcsCommon', restaurantAnalyticsCtrl])
+  .controller('restaurantDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'rcsCommon', restaurantDataCtrl])
+  .controller('restaurantPersonDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'rcsCommon', restaurantPersonDataCtrl])
   .controller('monitorCtrl', ['$rootScope', '$scope', '$state', 'rcsSession', 'RCS_EVENT', monitorCtrl])
   .controller('monitorTableCtrl', ['$scope', 'rcsSession', monitorTableCtrl])
   .controller('monitorRequestCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', 'REQUEST_TYPE', monitorRequestCtrl])
@@ -326,9 +326,9 @@ function newRestaurantCtrl($scope, $state, rcsHttp, rcsSession) {
   }
 }
 
-function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
+function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession, rcsCommon) {
   $scope.restaurants = null;
-  $scope.selectedIndex = 0;
+  $scope.rcsCommon = rcsCommon;
   var signedInUser = rcsSession.getSignedInUser();
 
   // initialize
@@ -341,7 +341,8 @@ function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
       .success(function (res) {
         $scope.restaurants = res.Restaurants;
         if(res.Restaurants.length > 0) {
-          clickRestaurants(0);
+          clickRestaurants(res.Restaurants[rcsCommon.analyticsRestaurantIndex] ?
+            rcsCommon.analyticsRestaurantIndex : 0);
         }
       });
   }
@@ -352,7 +353,7 @@ function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
   $scope.gotoPerson = gotoPerson;
 
   function clickRestaurants(index) {
-    $scope.selectedIndex = index;
+    rcsCommon.analyticsRestaurantIndex = index;
     Analytics.get30Data($scope.restaurants[index].id);
     Analytics.get30Person($scope.restaurants[index].id);
   }
@@ -366,9 +367,9 @@ function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
   }
 }
 
-function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
+function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession, rcsCommon) {
   $scope.restaurants = null;
-  $scope.selectedIndex = 0;
+  $scope.rcsCommon = rcsCommon;
   var signedInUser = rcsSession.getSignedInUser();
 
   // initialize
@@ -381,7 +382,8 @@ function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
       .success(function (res) {
         $scope.restaurants = res.Restaurants;
         if(res.Restaurants.length > 0) {
-          clickRestaurants(0);
+          clickRestaurants(res.Restaurants[rcsCommon.analyticsRestaurantIndex] ?
+            rcsCommon.analyticsRestaurantIndex : 0);
         }
       });
   }
@@ -390,14 +392,14 @@ function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
   $scope.clickRestaurants = clickRestaurants;
 
   function clickRestaurants(index) {
-    $scope.selectedIndex = index;
+    rcsCommon.analyticsRestaurantIndex = index;
     Analytics.getData($scope.restaurants[index].id);
   }
 }
 
-function restaurantPersonDataCtrl($scope, $state, rcsHttp, rcsSession) {
+function restaurantPersonDataCtrl($scope, $state, rcsHttp, rcsSession, rcsCommon) {
   $scope.restaurants = null;
-  $scope.selectedIndex = 0;
+  $scope.rcsCommon = rcsCommon;
   var signedInUser = rcsSession.getSignedInUser();
 
   // initialize
@@ -410,7 +412,8 @@ function restaurantPersonDataCtrl($scope, $state, rcsHttp, rcsSession) {
       .success(function (res) {
         $scope.restaurants = res.Restaurants;
         if(res.Restaurants.length > 0) {
-          clickRestaurants(0);
+          clickRestaurants(res.Restaurants[rcsCommon.analyticsRestaurantIndex] ?
+            rcsCommon.analyticsRestaurantIndex : 0);
         }
       });
   }
@@ -419,7 +422,7 @@ function restaurantPersonDataCtrl($scope, $state, rcsHttp, rcsSession) {
   $scope.clickRestaurants = clickRestaurants;
 
   function clickRestaurants(index) {
-    $scope.selectedIndex = index;
+    rcsCommon.analyticsRestaurantIndex = index;
     Analytics.getPersonData($scope.restaurants[index].id);
   }
 }
