@@ -6,6 +6,7 @@ angular
   .controller('newRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', newRestaurantCtrl])
   .controller('restaurantAnalyticsCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', restaurantAnalyticsCtrl])
   .controller('restaurantDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', restaurantDataCtrl])
+  .controller('restaurantPersonDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', restaurantPersonDataCtrl])
   .controller('monitorCtrl', ['$rootScope', '$scope', '$state', 'rcsSession', 'RCS_EVENT', monitorCtrl])
   .controller('monitorTableCtrl', ['$scope', 'rcsSession', monitorTableCtrl])
   .controller('monitorRequestCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', 'REQUEST_TYPE', monitorRequestCtrl])
@@ -351,10 +352,9 @@ function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession) {
   }
 
   function gotoPerson() {
-
+    $state.go('page.restaurant.personData');
   }
 }
-
 
 function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
   $scope.restaurants = null;
@@ -382,6 +382,35 @@ function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession) {
   function clickRestaurants(index) {
     $scope.selectedIndex = index;
     Analytics.getData($scope.restaurants[index].id);
+  }
+}
+
+function restaurantPersonDataCtrl($scope, $state, rcsHttp, rcsSession) {
+  $scope.restaurants = null;
+  $scope.selectedIndex = 0;
+  var signedInUser = rcsSession.getSignedInUser();
+
+  // initialize
+  if (!signedInUser) {
+    return $state.go('page.signin');
+  }
+
+  function initializeRestaurants () {
+    return rcsHttp.Restaurant.list()
+      .success(function (res) {
+        $scope.restaurants = res.Restaurants;
+        if(res.Restaurants.length > 0) {
+          clickRestaurants(0);
+        }
+      });
+  }
+  initializeRestaurants();
+
+  $scope.clickRestaurants = clickRestaurants;
+
+  function clickRestaurants(index) {
+    $scope.selectedIndex = index;
+    Analytics.getPersonData($scope.restaurants[index].id);
   }
 }
 

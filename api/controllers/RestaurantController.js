@@ -245,6 +245,13 @@ module.exports = {
     });
   },
 
+  personData: function(req, res) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.personData(restaurantId, function(results) {
+      return res.json(results);
+    });
+  },
+
   data30: function(req, res) {
     var restaurantId = req.body.RestaurantId;
     restaurantAnalytics.data30(restaurantId, function(results) {

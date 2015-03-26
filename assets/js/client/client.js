@@ -101,12 +101,13 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
         url: '/restaurant/data',
         templateUrl: '/template/page-restaurant-data',
         controller: 'restaurantDataCtrl',
-        abscract: true,
-        data: {
-          icon: 'line-chart',
-          title: '数据统计',
-          authorization: [USER_ROLE.manager]
-        }
+        abscract: true
+      }, {
+        name: 'personData',
+        url: '/restaurant/personData',
+        templateUrl: '/template/page-restaurant-person-data',
+        controller: 'restaurantPersonDataCtrl',
+        abscract: true
       }]
     }, {
       name: 'management',

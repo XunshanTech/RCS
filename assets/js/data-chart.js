@@ -65,6 +65,107 @@ var Analytics = (function() {
     })
   };
 
+  var getPersonData = function(restaurantId) {
+
+    Highcharts.setOptions({
+      lang: {
+        weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+        shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+      }
+    });
+
+    var seriesOptions = [{
+      name: '原始需要服务员',
+      type: 'column',
+      data: []
+    }, {
+      name: '优化需要服务员',
+      type: 'column',
+      data: []
+    }];
+    // create the chart when all data is loaded
+    var createChart = function () {
+      $('#data-container').highcharts('StockChart', {
+        title: {
+          text: '餐厅所需服务员人数对比'
+        },
+        subtitle: {
+          text: '使用系统前 vs 使用系统后'
+        },
+        rangeSelector: {
+          enabled: false
+        },
+        credits: false,
+        exporting: {
+          enabled: false
+        },
+        chart: {
+          width: $('#data-container').width()
+        },
+        navigator: {
+          xAxis: {
+            dateTimeLabelFormats: {
+              day: '%b%e日',
+              week: '%b%e日',
+              month: '%b%e日',
+              year: '%Y'
+            }
+          }
+        },
+        xAxis: {
+          dateTimeLabelFormats: {
+            day: '%b%e日'
+          }
+        },
+        yAxis: {
+          min: 0,
+          labels: {
+            formatter: function () {
+              return this.value + '人';
+            }
+          },
+          plotLines: [{
+            value: 0,
+            width: 2
+          }]
+        },
+        tooltip: {
+          pointFormatter: function() {
+            var seriesColor = this.series.color;
+            var seriesName = this.series.name;
+            var y = this.y + '人';
+            return '<span style="color:' + seriesColor + '">' +
+              seriesName + '</span>: <b>' + y + '</b><br/>';
+          },
+          valueDecimals: 0,
+          dateTimeLabelFormats: {
+            day:"%Y年%b%e日,%A"
+          }
+        },
+        series: seriesOptions
+      });
+    };
+
+    $.ajax({
+      url: '/Restaurant/personData',
+      dataType: 'json',
+      data: {
+        RestaurantId: restaurantId
+      },
+      method: 'post',
+      success: function(result) {
+        console.log(result);
+        for(var i = 0; i < result.length; i++) {
+          var ret = result[i];
+          var date = (new Date(ret.date)).getTime();
+          seriesOptions[0].data.push([date, Math.ceil(ret.old / 300)]);
+          seriesOptions[1].data.push([date, Math.ceil(ret.new / 300)]);
+        }
+        window.setTimeout(createChart, 0);
+      }
+    })
+  };
+
   var getData = function(restaurantId) {
 
     Highcharts.setOptions({
@@ -86,6 +187,12 @@ var Analytics = (function() {
     // create the chart when all data is loaded
     var createChart = function () {
       $('#data-container').highcharts('StockChart', {
+        title: {
+          text: '餐厅服务时间对比'
+        },
+        subtitle: {
+          text: '使用系统前 vs 使用系统后'
+        },
         rangeSelector: {
           enabled: false
         },
@@ -162,6 +269,7 @@ var Analytics = (function() {
 
   return {
     getData: getData,
+    getPersonData: getPersonData,
     get30Data: get30Data,
     get30Person: get30Person
   }
