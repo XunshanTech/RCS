@@ -74,7 +74,18 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
         controller: 'listRestaurantCtrl',
         data: {
           icon: 'cutlery',
-          title: '餐厅列表'
+          title: '餐厅列表',
+          authorization: [USER_ROLE.admin]
+        }
+      }, {
+        name: 'analytics',
+        url: '/restaurant/analytics',
+        templateUrl: '/template/page-restaurant-analytics',
+        controller: 'restaurantAnalyticsCtrl',
+        data: {
+          icon: 'line-chart',
+          title: '数据统计',
+          authorization: [USER_ROLE.manager]
         }
       }, {
         name: 'new',
@@ -85,6 +96,28 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
           icon: 'plus-square',
           title: '新建餐厅',
           authorization: [USER_ROLE.manager]
+        }
+      }, {
+        name: 'data',
+        url: '/restaurant/data',
+        templateUrl: '/template/page-restaurant-data',
+        controller: 'restaurantDataCtrl',
+        abscract: true,
+        showAnalyticsLink: true,
+        data: {
+          icon: 'line-chart',
+          title: '节省时间'
+        }
+      }, {
+        name: 'personData',
+        url: '/restaurant/personData',
+        templateUrl: '/template/page-restaurant-person-data',
+        controller: 'restaurantPersonDataCtrl',
+        abscract: true,
+        showAnalyticsLink: true,
+        data: {
+          icon: 'line-chart',
+          title: '节省人力'
         }
       }]
     }, {

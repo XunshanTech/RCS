@@ -799,7 +799,8 @@ function rcsHttp ($rootScope, $http, $state, $log, RCS_EVENT) {
 
 function rcsCommon() {
   var commonService = {
-    changeDialogLeftTime: changeDialogLeftTime
+    changeDialogLeftTime: changeDialogLeftTime,
+    analyticsRestaurantIndex: 0
   };
   function changeDialogLeftTime($scope, leftTime, $hideDialog) {
     $scope.leftTime = leftTime;

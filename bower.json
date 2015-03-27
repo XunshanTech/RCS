@@ -13,6 +13,7 @@
     "angular-ui-router": "0.2.10",
     "iCheck": "1.0.2",
     "angular-ui-router.stateHelper": "~1.1.0",
-    "angular-material": "~0.0.2"
+    "angular-material": "~0.0.2",
+    "highstock-release": "~2.1.4"
   }
 }

@@ -4,6 +4,9 @@ angular
   .controller('signInCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'ERROR_MESSAGE', signInCtrl])
   .controller('listRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', listRestaurantCtrl])
   .controller('newRestaurantCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', newRestaurantCtrl])
+  .controller('restaurantAnalyticsCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'rcsCommon', restaurantAnalyticsCtrl])
+  .controller('restaurantDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'rcsCommon', restaurantDataCtrl])
+  .controller('restaurantPersonDataCtrl', ['$scope', '$state', 'rcsHttp', 'rcsSession', 'rcsCommon', restaurantPersonDataCtrl])
   .controller('monitorCtrl', ['$rootScope', '$scope', '$state', 'rcsSession', 'RCS_EVENT', monitorCtrl])
   .controller('monitorTableCtrl', ['$scope', 'rcsSession', monitorTableCtrl])
   .controller('monitorRequestCtrl', ['$rootScope', '$scope', 'rcsSession', 'RCS_EVENT', 'REQUEST_TYPE', monitorRequestCtrl])
@@ -31,6 +34,7 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
   // scope methods
   $scope.clickRestaurant = clickRestaurant;
   $scope.clickSelectRestaurant = clickSelectRestaurant;
+  $scope.clickAnalytics = clickAnalytics;
   $scope.clickSignOut = clickSignOut;
   $scope.clickToggleNav = clickToggleNav;
   $scope.clickUser = clickUser;
@@ -38,6 +42,7 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
   $scope.getCurrentUser = getCurrentUser;
   $scope.ifCanNav = ifCanNav;
   $scope.ifSelectedRestaurant = ifSelectedRestaurant;
+  $scope.ifSubAnalytics = ifSubAnalytics;
   $scope.ifSignedIn = ifSignedIn;
   $scope.simpleToast = simpleToast;
 
@@ -75,6 +80,10 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
     $state.go('page.restaurant.list');
   }
 
+  function clickAnalytics() {
+    $state.go('page.restaurant.analytics');
+  }
+
   function clickUser () {
     $state.go('page.signin');
   }
@@ -89,6 +98,10 @@ function pageCtrl($rootScope, $scope, $state, $materialSidenav, $materialToast, 
 
   function ifSelectedRestaurant () {
     return rcsSession.getSelectedRestaurant() != null;
+  }
+
+  function ifSubAnalytics() {
+    return $state.current.showAnalyticsLink && true;
   }
 
   function ifCanNav (navEntry) {
@@ -176,7 +189,8 @@ function signInCtrl ($scope, $state, rcsHttp, rcsSession, ERROR_MESSAGE) {
       $scope.signIn.email,
       $scope.signIn.pwd,
       function () {
-        $state.go('page.restaurant.list');
+        var goLink = rcsSession.getSignedInUser().Role === 'manager' ? 'page.restaurant.analytics' : 'page.restaurant.list';
+        $state.go(goLink);
       },
       function () {
         alert('login failed');
@@ -310,6 +324,107 @@ function newRestaurantCtrl($scope, $state, rcsHttp, rcsSession) {
 
     $scope.admins.push($scope.newAdmin);
     $scope.newAdmin = '';
+  }
+}
+
+function restaurantAnalyticsCtrl($scope, $state, rcsHttp, rcsSession, rcsCommon) {
+  $scope.restaurants = null;
+  $scope.rcsCommon = rcsCommon;
+  var signedInUser = rcsSession.getSignedInUser();
+
+  // initialize
+  if (!signedInUser) {
+    return $state.go('page.signin');
+  }
+
+  function initializeRestaurants () {
+    return rcsHttp.Restaurant.list()
+      .success(function (res) {
+        $scope.restaurants = res.Restaurants;
+        if(res.Restaurants.length > 0) {
+          clickRestaurants(res.Restaurants[rcsCommon.analyticsRestaurantIndex] ?
+            rcsCommon.analyticsRestaurantIndex : 0);
+        }
+      });
+  }
+  initializeRestaurants();
+
+  $scope.clickRestaurants = clickRestaurants;
+  $scope.gotoData = gotoData;
+  $scope.gotoPerson = gotoPerson;
+
+  function clickRestaurants(index) {
+    rcsCommon.analyticsRestaurantIndex = index;
+    Analytics.get30Data($scope.restaurants[index].id);
+    Analytics.get30Person($scope.restaurants[index].id);
+  }
+
+  function gotoData() {
+    $state.go('page.restaurant.data');
+  }
+
+  function gotoPerson() {
+    $state.go('page.restaurant.personData');
+  }
+}
+
+function restaurantDataCtrl($scope, $state, rcsHttp, rcsSession, rcsCommon) {
+  $scope.restaurants = null;
+  $scope.rcsCommon = rcsCommon;
+  var signedInUser = rcsSession.getSignedInUser();
+
+  // initialize
+  if (!signedInUser) {
+    return $state.go('page.signin');
+  }
+
+  function initializeRestaurants () {
+    return rcsHttp.Restaurant.list()
+      .success(function (res) {
+        $scope.restaurants = res.Restaurants;
+        if(res.Restaurants.length > 0) {
+          clickRestaurants(res.Restaurants[rcsCommon.analyticsRestaurantIndex] ?
+            rcsCommon.analyticsRestaurantIndex : 0);
+        }
+      });
+  }
+  initializeRestaurants();
+
+  $scope.clickRestaurants = clickRestaurants;
+
+  function clickRestaurants(index) {
+    rcsCommon.analyticsRestaurantIndex = index;
+    Analytics.getData($scope.restaurants[index].id);
+  }
+}
+
+function restaurantPersonDataCtrl($scope, $state, rcsHttp, rcsSession, rcsCommon) {
+  $scope.restaurants = null;
+  $scope.rcsCommon = rcsCommon;
+  var signedInUser = rcsSession.getSignedInUser();
+
+  // initialize
+  if (!signedInUser) {
+    return $state.go('page.signin');
+  }
+
+  function initializeRestaurants () {
+    return rcsHttp.Restaurant.list()
+      .success(function (res) {
+        $scope.restaurants = res.Restaurants;
+        if(res.Restaurants.length > 0) {
+          clickRestaurants(res.Restaurants[rcsCommon.analyticsRestaurantIndex] ?
+            rcsCommon.analyticsRestaurantIndex : 0);
+        }
+      });
+  }
+  initializeRestaurants();
+
+  $scope.clickRestaurants = clickRestaurants;
+
+  function clickRestaurants(index) {
+    rcsCommon.analyticsRestaurantIndex = index;
+    Analytics.getPersonData($scope.restaurants[index].id);
   }
 }
 

@@ -1,0 +1,22 @@
+form.restaurant-data-form
+  label.radio-inline(ng-repeat="restaurant in restaurants")
+    input#restaurant-list-radio(type="radio", name="inlineRadioOptions",
+      ng-checked='rcsCommon.analyticsRestaurantIndex == $index',
+      value="$index", ng-click='clickRestaurants($index)')
+    |{{restaurant.RestaurantName}}
+.analytics
+  .row
+    .col-md-6
+      .panel
+        .analytics-title 使用本系统后，近30天可节省时间成本
+        .analytics-circle-wrap.img-circle(ng-click='gotoData()')
+          #analytics-data-30.analytics-circle 0
+            span 分
+    .col-md-6
+      .panel
+        .analytics-title 使用本系统后，近30天可节省人力成本
+        .analytics-circle-wrap.img-circle(ng-click='gotoPerson()')
+          #analytics-person-30.analytics-circle 0
+            span 元
+
+script(src='/js/data-chart.js')

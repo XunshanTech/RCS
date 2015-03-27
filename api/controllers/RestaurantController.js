@@ -15,6 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var restaurantAnalytics = require('../analytics/RestaurantAnalytics');
+
 module.exports = {
 
   create: function(req, res){
@@ -234,6 +236,34 @@ module.exports = {
           Admins: admins
         });
       });
+  },
+
+  data: function(req, res) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.data(restaurantId, function(results) {
+      return res.json(results);
+    });
+  },
+
+  personData: function(req, res) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.personData(restaurantId, function(results) {
+      return res.json(results);
+    });
+  },
+
+  data30: function(req, res) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.data30(restaurantId, function(results) {
+      return res.json(results);
+    })
+  },
+
+  person30: function(req, res) {
+    var restaurantId = req.body.RestaurantId;
+    restaurantAnalytics.person30(restaurantId, function(results) {
+      return res.json(results);
+    })
   },
 
   list: function (req, res) {
