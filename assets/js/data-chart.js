@@ -102,6 +102,17 @@ var Analytics = (function() {
         exporting: {
           enabled: false
         },
+        legend: {
+          enabled: true,
+          align: 'right',
+          backgroundColor: '#ffffff',
+          borderWidth: 0,
+          layout: 'vertical',
+          verticalAlign: 'top',
+          y: 100,
+          shadow: false,
+          itemMarginTop: 10
+        },
         chart: {
           width: $('#data-container').width()
         },
@@ -206,6 +217,17 @@ var Analytics = (function() {
         credits: false,
         exporting: {
           enabled: false
+        },
+        legend: {
+          enabled: true,
+          align: 'right',
+          backgroundColor: '#ffffff',
+          borderWidth: 0,
+          layout: 'vertical',
+          verticalAlign: 'top',
+          y: 100,
+          shadow: false,
+          itemMarginTop: 10
         },
         chart: {
           width: $('#data-container').width()
