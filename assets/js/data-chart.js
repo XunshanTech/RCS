@@ -244,7 +244,8 @@ var Analytics = (function() {
         },
         xAxis: {
           dateTimeLabelFormats: {
-            day: '%b%e日'
+            day: '%b%e日',
+            week: '%b%e日'
           }
         },
         yAxis: {
