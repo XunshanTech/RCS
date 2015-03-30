@@ -1,10 +1,8 @@
 #monitor .pane {
   min-height: 800px;
   max-height: 800px;
-  margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  margin-bottom: 40px;
   font-size: 18px;
   background-color: #ffffff;
 }
@@ -14,17 +12,23 @@
 }
 
 #monitor .pane-tables {
-  width: 700px;
+  flex: 1;
 }
 
 #monitor .pane-requests {
   width: 285px;
-  margin-left: 15px;
+  margin-left: 20px;
 }
-
+#requests.pane-requests {
+  padding-left: 0;
+  padding-right: 0;
+}
+#requests .material-tile-right {
+  padding-right: 10px;
+}
 #monitor .pane-waiters {
   width: 200px;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 #monitor .tooltip {
@@ -43,7 +47,7 @@
 
 #tables .header {
   height: 30px;
-  margin-top: 5px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
@@ -54,7 +58,7 @@
 #tables .rcs-table-sample {
   height: 30px;
   line-height: 30px;
-  width: 60px;
+  width: 70px;
   margin-left: 5px;
   margin-right: 5px;
   text-align: center;
@@ -113,18 +117,18 @@
 }
 
 #tables .rcs-table-empty {
-  background-color: #e4e0d8;
-  color: #000;
+  background-color: #58c0de;
+  color: #ffffff;
 }
 
 #tables .rcs-table-serving{
-  background-color: #8a1717;
-  color: #fff;
+  background-color: #d9534f;
+  color: #ffffff;
 }
 
 #tables .rcs-table-paid{
-  background-color: #cba353;
-  color: #fff;
+  background-color: #5cb85c;
+  color: #ffffff;
 }
 
 #tables .rcs-table-null {
@@ -141,11 +145,12 @@
 }
 
 #tables .rcs-table-create:hover {
-  background-color: #93b0ba;
+  background-color: #5bc0de;
 }
 
 #tables .rcs-table-with-book {
-  border-top: 8px solid #93b0ba;
+  background-color: #337ab7;
+  color: #ffffff;
 }
 
 #tables .rcs-table-with-book > .rcs-table-mark {
@@ -161,21 +166,23 @@
 }
 
 #requests material-tab {
-  background-color: #D3CFCA;
+  background-color: #1e8fc6;
+  color: #ffffff;
 }
 
 #requests material-tab.active {
-  background-color: #E5E0D8;
+  background-color: #36a9e1;
+  color: #ffffff;
 }
 
 #requests material-tab-label {
-  color: #818181;
+  color: #ffffff;
   font-size: 18px;
 }
 
 #requests material-tab.active material-tab-label {
   font-weight: bold;
-  color: #8A1717;
+  color: #ffffff;
 }
 
 #requests material-tab-label.active {
@@ -183,12 +190,12 @@
 }
 
 #requests .tabs-header {
-  background-color: #8A1717;
+  background-color: #d9534f;
 }
 
 #requests material-ink-bar {
   height: 5px;
-  background: #8A1717;
+  background: #d9534f;
   position: absolute;
   margin-top: -5px;
   width: 50% !important;
@@ -199,7 +206,7 @@
 }
 
 #requests .rcs-request:hover {
-  color: #8a1717;
+  color: #d9534f;
 }
 
 #requests .rcs-request:hover .material-tile-content > h2 {
@@ -215,28 +222,28 @@
 }
 
 #requests .rcs-request .fa-flag {
-  color: #8a1717;
+  color: #d9534f;
   font-size: 28px;
 }
 
 #requests .rcs-request .material-tile-right .fa-spinner {
-  color: #8a1717;
+  color: #d9534f;
 }
 
 #waiters a {
-  color: #8A1717;
+  color: #d9534f;
 }
 
 #waiters .list-header .material-tile-content,
 #waiters .list-header .material-tile-right {
   padding-top: 0px;
   padding-bottom: 0px;
-  border-bottom: 2px solid #8A1717;
+  border-bottom: 2px solid #d9534f;
 }
 
 #waiters span.free {
   font-weight: bold;
-  color: #8A1717;
+  color: #d9534f;
 }
 
 #waiters .list-items {
@@ -244,7 +251,7 @@
 }
 
 #waiters .list-items:hover {
-  color: #8a1717;
+  color: #d9534f;
 }
 
 #waiters .list-items:hover .material-tile-content {

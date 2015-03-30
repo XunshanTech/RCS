@@ -24,6 +24,7 @@ body *
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  padding: 20px;
 }
 
 #rcs .text-selectable {
@@ -47,7 +48,7 @@ body *
 }
 
 #rcs a:hover {
-  color: #8A1717;
+  color: #d9534f;
   font-weight: bold;
 }
 
@@ -77,12 +78,12 @@ body *
 }
 
 #rcs material-button.hover:hover {
-  color: #8a1717;
+  color: #d9534f;
   font-weight: bold;
 }
 
 #rcs material-button.material-theme-light {
-  background-color: #8A1717 !important;
+  background-color: #d9534f !important;
 }
 
 #rcs material-button[disabled] {
@@ -91,11 +92,11 @@ body *
 }
 
 #rcs material-button.material-button-colored {
-  color: #8A1717 !important;
+  color: #d9534f !important;
 }
 
 #rcs material-radio-button .material-on {
-  background-color: #8A1717;
+  background-color: #d9534f;
 }
 
 #rcs canvas.material-ink-ripple {

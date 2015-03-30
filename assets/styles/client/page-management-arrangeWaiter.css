@@ -1,5 +1,5 @@
 #waiter a {
-  color: #8A1717;
+  color: #d9534f;
 }
 
 #waiter .pane {
@@ -15,7 +15,7 @@
   background-color: #ffffff;
 }
 #waiter .list-header {
-  border-bottom: 1px solid #8A1717;
+  border-bottom: 1px solid #d9534f;
 }
 #waiter .list-header .material-tile-content,
 #waiter .list-header .material-tile-right {
@@ -49,5 +49,5 @@
 
 #waiter span.online {
   font-weight: bold;
-  color: #8A1717;
+  color: #d9534f;
 }

@@ -134,7 +134,7 @@ function config ($urlRouterProvider, $stateProvider, $logProvider, stateHelperPr
         controller: 'monitorCtrl',
         data: {
           icon: 'th',
-          title: '餐桌+请求'
+          title: '餐桌 + 请求'
         }
       }, {
         name: 'authorMenu',
