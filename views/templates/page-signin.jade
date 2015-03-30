@@ -1,6 +1,5 @@
 div(id="user" flex layout="vertical" layout-fill)
-  .text-center(ng-if="ifSignedIn() == false")
-    h2 登录餐厅管理系统
+  .text-center.user-sign-up-link(ng-if="ifSignedIn() == false")
     h3
       material-button.material-button-colored(ng-click="clickShowSignUp()")
         u 注册新用户
@@ -40,7 +39,7 @@ div(id="user" flex layout="vertical" layout-fill)
 
 
     form.pane.material-whiteframe-z3(ng-if="ifSignedIn() == false", layout="vertical", ng-submit="clickSignIn()")
-      h3.text-center 请输入登录信息
+      h3.text-center 登录餐厅管理系统
       material-input-group.material-input-group-theme-light
         label(for="4") 用户邮箱
         material-input(id="4" type="text" ng-model="signIn.email" ng-required="true" tabIndex="1")
