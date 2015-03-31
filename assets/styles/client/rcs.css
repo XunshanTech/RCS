@@ -94,7 +94,10 @@ body *
 #rcs material-button.material-button-colored {
   color: #d9534f !important;
 }
-
+#rcs material-button.material-button-colored:hover {
+  color: #ffffff !important;
+  background-color: #58c0de;
+}
 #rcs material-radio-button .material-on {
   background-color: #d9534f;
 }

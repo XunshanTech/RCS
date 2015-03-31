@@ -93,9 +93,7 @@
   font-size: 18px;
 }
 
-#page #signout {
-  margin-bottom: 20px;
-}
+#page #signout {}
 
 material-toast.rcs.right {
   font-size: 18px;

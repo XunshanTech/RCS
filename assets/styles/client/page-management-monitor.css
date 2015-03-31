@@ -3,7 +3,7 @@
   max-height: 800px;
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 18px;
+  font-size: 16px;
   background-color: #ffffff;
 }
 
@@ -241,9 +241,18 @@
   border-bottom: 2px solid #d9534f;
 }
 
-#waiters span.free {
+#waiters material-button.hover span,
+#waiters material-button.hover i {
   font-weight: bold;
   color: #d9534f;
+}
+#waiters material-button.hover:hover {
+  color: #ffffff;
+  background-color: #58c0de;
+}
+#waiters material-button.hover:hover span,
+#waiters material-button.hover:hover i {
+  color: #ffffff;
 }
 
 #waiters .list-items {

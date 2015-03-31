@@ -11,10 +11,11 @@
             i.fa(class="fa-{{navEntry.data.icon}}")
             | {{navEntry.data.title}}
       material-button.nav-entry(ng-if="ifSignedIn()===true" ng-click="clickUser()")
-        b {{getCurrentUser().Name}}
+        i.fa(class='fa-user')
+        | {{getCurrentUser().Name}}
       material-button.nav-entry(id="signout" ng-if="ifSignedIn()===true" ng-click="clickSignOut()")
         i.fa.fa-sign-out.fa-2x
-        | 退出登录
+        | 退出
   div(layout="vertical" layout-fill)
     material-toolbar.material-theme-dark
       .material-toolbar-tools(layout="horizontal")
