@@ -9,12 +9,14 @@
   cursor: pointer;
   text-align: left;
   width: 100%;
-  padding: 20px 0 20px 20px;
+  padding: 10px 0 10px 20px;
   color: #ffffff;
   border-radius: 0;
+  font-weight: bold;
+  vertical-align: middle;
 }
 #page .page-nav-wrap {
-  padding-top: 20px;
+  padding-top: 0;
 }
 #page .page-nav-link {
   display: block;
@@ -42,15 +44,16 @@
   width: 40px;
   vertical-align: middle;
   text-align: center;
+  font-size: 16px;
 }
 
 #page material-button.nav-entry span,
 #page material-button.nav-entry b {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 #page .active material-button.nav-entry {
-  font-weight: bold;
+  background-color: #2d323d;
 }
 
 /*.active material-button.nav-entry::before {
