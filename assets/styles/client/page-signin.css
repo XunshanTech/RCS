@@ -8,6 +8,11 @@
   background-color: #ffffff;
 }
 
+#user .user-sign-up-link {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 #user .pane material-button {
   margin-top: 30px;
   height: 40px;

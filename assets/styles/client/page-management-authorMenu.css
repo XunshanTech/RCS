@@ -18,7 +18,7 @@
 }
 
 #author .header input {
-  border-color: #8A1717;
+  border-color: #d9534f;
   border-bottom-width: 2px;
   height: 30px;
   padding: 0;
@@ -30,7 +30,7 @@
 }
 
 #author .tabs-header {
-  background-color: #8A1717;
+  background-color: #d9534f;
 }
 
 #author material-tab {
@@ -38,7 +38,7 @@
 }
 
 #author material-tab.active {
-  background-color: #8A1717;
+  background-color: #d9534f;
 }
 
 #author material-tab-label {
@@ -67,7 +67,7 @@
 
 #author .list-header .material-tile-content {
   font-size: 16px;
-  border-bottom: 1px solid #8A1717;
+  border-bottom: 1px solid #d9534f;
 }
 
 #author .list-header .material-tile-content b {
@@ -95,7 +95,7 @@
 
 #author .material-tile-content input:focus,
 #author .material-tile-content input.dirty {
-  border-color: #8A1717;
+  border-color: #d9534f;
   border-bottom-width: 2px;
 }
 

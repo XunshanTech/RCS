@@ -1,34 +1,87 @@
 .restaurant-data-form {
   padding: 20px;
 }
-.restaurant-data-form label {
-  font-size: 1em;
-  padding-right: 20px;
+.restaurant-tabs {
+  padding: 10px 20px;
+  background-color: #ffffff;
 }
-
+.restaurant-tab,
+.restaurant-tab-label {
+  float: left;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  font-size: 16px;
+}
+.restaurant-tab {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  color: #d9534f;
+  border-radius: 2px;
+  margin-right: 20px;
+}
+.restaurant-tab-label {
+}
+.restaurant-tab:hover,
+.restaurant-tab-sel {
+  background-color: #d9534f;
+  color: #ffffff;
+  font-weight: bold;
+}
 .analytics {
-  padding: 20px;
+  padding: 0 20px 20px;
+}
+.analytics .panel {
+  border-radius: 2px;
+  overflow: hidden;
 }
 
 .analytics-title {
+  padding-left: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  height: 38px;
+  line-height: 38px;
+  background-color: #36a9e1;
+  color: #ffffff;
+
+}
+.analytics-title-red {
+  background-color: #d9534f;
+}
+.analytics-content {
+  padding: 20px;
+}
+.analytics-icon {
+  width: 50%;
+  height: 100px;
+  line-height: 100px;
+  font-size: 60px;
+  float: left;
   text-align: center;
-  font-size: 2em;
-  padding-top: 30px;
+  background-color: #5cb85c;
+  color: #ffffff;
+  cursor: pointer;
+}
+.analytics-icon-money {
+  background-color: #f0ad4e;
 }
 .analytics-circle-wrap {
-  width: 260px;
-  height: 260px;
-  background-color: #d9534f;
+  float: left;
+  width: 50%;
+  height: 100px;
+  line-height: 100px;
   text-align: center;
-  margin: 40px auto;
   cursor: pointer;
 }
 .analytics-circle {
-  line-height: 260px;
-  color: #ffffff;
   font-size: 3em;
 }
 .analytics-circle span {
   font-size: 0.5em;
   padding: 0 0.2em;
+}
+#data-person-container {
+  margin-top: 20px;
 }

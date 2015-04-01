@@ -1,38 +1,59 @@
-#page material-button.nav-entry {
-  cursor: pointer;
-  line-height: 40px;
-  max-height: 40px;
-  text-align: left;
-  width: 100%;
-  padding-left: 40px;
+#page .page-title {
+  margin: 0 auto;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 22px;
 }
 
+#page material-button.nav-entry {
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  padding: 10px 0 10px 20px;
+  color: #ffffff;
+  border-radius: 0;
+  font-weight: bold;
+  vertical-align: middle;
+}
+#page .page-nav-wrap {
+  padding-top: 0;
+}
+#page .page-nav-link {
+  display: block;
+}
+#page .material-sidenav-left material-button:hover,
+#page .material-sidenav-left material-button:focus {
+  background-color: #2d323d;
+  color: #ffffff;
+}
 #page material-content.background {
-  background-color: #f8f4ee;
+  background-color: #f5f5f5;
 }
 
 #page material-toolbar.material-theme-light {
-  background-color: #E5E0D8 !important;
-  color: #606060 !important;
+  background-color: #1e8fc6 !important;
+  color: #ffffff !important;
 }
 
 #page material-toolbar.material-theme-dark {
-  background-color: #D3CFCA !important;
-  color: #606060 !important;
+  background-color: #36a9e1 !important;
+  color: #ffffff !important;
 }
 
 #page material-button.nav-entry .fa {
   width: 40px;
+  vertical-align: middle;
   text-align: center;
+  font-size: 16px;
 }
 
 #page material-button.nav-entry span,
 #page material-button.nav-entry b {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 #page .active material-button.nav-entry {
-  font-weight: bold;
+  background-color: #2d323d;
 }
 
 /*.active material-button.nav-entry::before {
@@ -40,10 +61,18 @@
   font-size: 20px;
   font-family: 'Comic Sans MS', 'Segoe UI', Calibri, sans-serif;
 }*/
-
+#page .page-toolbar-link,
+#page .page-toolbar-link:hover {
+  padding: 10px;
+}
+#page .page-toolbar-link:hover {
+  background-color: #1e8fc6 !important;
+  color: #ffffff !important;
+}
 #page .breadcrumb {
   background: transparent;
   margin-bottom: 0px;
+  font-weight: bold;
 }
 
 #page .breadcrumb > .active {
@@ -51,21 +80,20 @@
 }
 
 #page .breadcrumb > li + li:before {
-  color: #606060;
+  color: #f0ad4e;
 }
 
 #page material-sidenav {
   min-width: 220px;
   max-width: 220px;
+  background-color: #383e4a;
 }
 
 #page .material-toolbar-tools material-button {
   font-size: 18px;
 }
 
-#page #signout {
-  margin-bottom: 20px;
-}
+#page #signout {}
 
 material-toast.rcs.right {
   font-size: 18px;

@@ -46,7 +46,7 @@
 #dialog-manageTable .list-header .material-tile-right {
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #8A1717;
+  border-bottom: 1px solid #d9534f;
 }
 
 #dialog-createTable .material-input-group,
@@ -108,7 +108,7 @@
 }
 
 #dialog-manageTable material-tab.active {
-  background-color: #8A1717;
+  background-color: #d9534f;
 }
 
 #dialog-manageTable material-tab-label {
@@ -131,13 +131,13 @@
 }
 
 #dialog-manageTable .btn-link {
-  color: #8A1717;
+  color: #d9534f;
 }
 
 #dialog-manageTable .btn-info {
-  background: #8A1717;
+  background: #d9534f;
   color: #fff;
-  border-color: #8A1717;
+  border-color: #d9534f;
 }
 
 #dialog-manageTable .text-info {
@@ -174,7 +174,7 @@
 #dialog-manageTable .form-control:focus {
   border: none;
   box-shadow: none;
-  border-bottom: 2px solid #8A1717;
+  border-bottom: 2px solid #d9534f;
 }
 
 #dialog-editMenuType material-radio-button {
@@ -200,7 +200,7 @@
 
 #dialog-editMenuFlavor .material-tile-content input,
 #dialog-editFlavorRequirements .material-tile-content input {
-  border-color: #8A1717;
+  border-color: #d9534f;
   border-bottom-width: 2px;
 }
 
@@ -215,7 +215,7 @@
   cursor: pointer;
 }
 #dialog-editWaiterTables .waiter-table.sel {
-  background-color: #8a1717;
+  background-color: #d9534f;
   color: #fff;
 }
 #dialog-editWaiterTables .dialog-content {

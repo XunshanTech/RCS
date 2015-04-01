@@ -4,7 +4,7 @@ div.text-unselectable(id="monitor" flex layout="vertical" layout-fill)
       i.fa.fa-spin.fa-refresh.fa-4x
       h2 同步数据...
 
-  div.text-unselectable(ng-if="loaded == true" layout="horizontal" layout-align="center" layout-padding)
+  div(ng-if="loaded == true" layout="horizontal" layout-align="center")
     .pane.pane-tables.material-whiteframe-z3(id="tables" ng-controller="monitorTableCtrl")
 
       div.header(layout="horizontal")
@@ -16,8 +16,7 @@ div.text-unselectable(id="monitor" flex layout="vertical" layout-fill)
             .rcs-table-sample.rcs-table-empty 空桌
             .rcs-table-sample.rcs-table-serving 用餐中
             .rcs-table-sample.rcs-table-paid 已结帐
-            .rcs-table-sample.rcs-table-empty.rcs-table-with-book
-              span 有预订
+            .rcs-table-sample.rcs-table-empty.rcs-table-with-book 有预订
           div(ng-switch-when="true" layout="horizontal" layout-align="center")
            b 编辑餐桌
         div(flex="10")

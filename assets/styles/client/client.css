@@ -28,11 +28,11 @@ html *
 }
 
 .bg-color-darkred {
-  background-color: #8A1717;
+  background-color: #d9534f;
 }
 
 .color-darkred {
-  color: #8A1717;
+  color: #d9534f;
 }
 
 ul.nav {
@@ -57,7 +57,7 @@ ul.nav {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #8A1717;
+  color: #d9534f;
   font-size: 20px;
   background-color: #E5E0D8;
 }
