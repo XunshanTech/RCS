@@ -1,19 +1,51 @@
 .restaurant-data-form {
-  padding: 20px;
+  padding: 20px 20px 0;
 }
-.restaurant-data-form label {
-  font-size: 1em;
-  padding-right: 20px;
+.restaurant-tabs {}
+.restaurant-tab,
+.restaurant-tab-label {
+  float: left;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  font-size: 16px;
 }
-
+.restaurant-tab {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  color: #d9534f;
+  border-radius: 2px;
+  margin-right: 20px;
+}
+.restaurant-tab-label {
+}
+.restaurant-tab:hover,
+.restaurant-tab-sel {
+  background-color: #d9534f;
+  color: #ffffff;
+  font-weight: bold;
+}
 .analytics {
   padding: 20px;
 }
+.analytics .panel {
+  border-radius: 2px;
+  overflow: hidden;
+}
 
 .analytics-title {
-  text-align: center;
-  font-size: 2em;
-  padding-top: 30px;
+  padding-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  height: 38px;
+  line-height: 38px;
+  background-color: #36a9e1;
+  color: #ffffff;
+
+}
+.analytics-title-red {
+  background-color: #d9534f;
 }
 .analytics-circle-wrap {
   width: 260px;
