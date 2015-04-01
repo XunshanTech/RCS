@@ -1,3 +1,6 @@
+script(src='/js/dependencies/highstock-release/highstock.js')
+script(src='/js/dependencies/highstock-release/modules/exporting.js')
+
 form.restaurant-data-form
   .restaurant-tabs.clearfix
     .restaurant-tab-label 选择餐厅：
@@ -9,14 +12,22 @@ form.restaurant-data-form
     .col-md-6
       .panel
         .analytics-title 最近30天节省的时间成本
-        .analytics-circle-wrap.img-circle(ng-click='gotoData()')
-          #analytics-data-30.analytics-circle 0
-            span 分
+        .analytics-content.clearfix
+          .analytics-icon
+            i.fa.fa-clock-o
+          .analytics-circle-wrap
+            #analytics-data-30.analytics-circle 0
+              span 分
     .col-md-6
       .panel
         .analytics-title.analytics-title-red 最近30天节省的人力成本
-        .analytics-circle-wrap.img-circle(ng-click='gotoPerson()')
-          #analytics-person-30.analytics-circle 0
-            span 元
+        .analytics-content.clearfix
+          .analytics-icon.analytics-icon-money
+            i.fa.fa-dollar
+          .analytics-circle-wrap
+            #analytics-person-30.analytics-circle 0
+              span 元
+  #data-container(style="height:100%;min-width:310px;") &nbsp;
+  #data-person-container(style="height:100%;min-width:310px;") &nbsp;
 
 script(src='/js/data-chart.js')

@@ -27,8 +27,6 @@
           | {{getCurrentRestaurant()}}
         //material-button.hover(ng-if="ifSelectedRestaurant()===true" ng-click="clickSelectRestaurant()")
           u 返回餐厅选择
-        material-button.page-toolbar-link(ng-if='ifSubAnalytics()', ng-click='clickAnalytics()')
-          | 返回数据统计首页
     material-content.background(layout="vertical" layout-fill scroll-y)
       //- nested ui-view is not working well in jade
       <div ui-view layout="vertical" layout-fill></div>

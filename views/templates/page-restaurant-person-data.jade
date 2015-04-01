@@ -2,11 +2,11 @@ script(src='/js/dependencies/highstock-release/highstock.js')
 script(src='/js/dependencies/highstock-release/modules/exporting.js')
 
 form.restaurant-data-form
-  label.radio-inline(ng-repeat="restaurant in restaurants")
-    input#restaurant-list-radio(type="radio", name="inlineRadioOptions",
-      ng-checked='rcsCommon.analyticsRestaurantIndex == $index',
-      value="$index", ng-click='clickRestaurants($index)')
-    |{{restaurant.RestaurantName}}
+  .restaurant-tabs.clearfix
+    .restaurant-tab-label 选择餐厅：
+    .restaurant-tab(ng-repeat='restaurant in restaurants',
+      ng-class='{true:"restaurant-tab-sel"}[rcsCommon.analyticsRestaurantIndex == $index]',
+      ng-click='clickRestaurants($index)') {{restaurant.RestaurantName}}
 
 #data-container(style="height:100%;min-width:310px;") &nbsp;
 

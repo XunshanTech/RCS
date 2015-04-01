@@ -21,6 +21,9 @@ var Analytics = (function() {
     if((s > 0 || (s === 0 && m === 0 && h === 0)) && !homeShow) {
       text += s + unit.s;
     }
+    if(text === '') {
+      text = 0 + unit.m;
+    }
     return text;
   };
 
@@ -33,6 +36,7 @@ var Analytics = (function() {
       },
       method: 'post',
       success: function(result) {
+        var money = 0;
         if(result && result.length > 0) {
           var resultIndex = result.length >= 2 ? 1 : 0;
           var newSecond = result[resultIndex].new;
@@ -41,9 +45,9 @@ var Analytics = (function() {
           }))[resultIndex].old;
           var second = oldSecond - newSecond;
           //4500 is one person get money / month
-          var money = parseInt(second / 300 * 4500);
-          $('#analytics-person-30').html(money + '<span>元</span>');
+          money = parseInt(second / 300 * 4500);
         }
+        $('#analytics-person-30').html(money + '<span>元</span>');
       }
     })
   };
@@ -57,10 +61,11 @@ var Analytics = (function() {
       },
       method: 'post',
       success: function(result) {
+        var ret = dataFormat(0, true);
         if(result.length > 0) {
-          var ret = dataFormat(result[0].old - result[0].new, true);
-          $('#analytics-data-30').html(ret);
+          ret = dataFormat(result[0].old - result[0].new, true);
         }
+        $('#analytics-data-30').html(ret);
       }
     })
   };
@@ -88,7 +93,7 @@ var Analytics = (function() {
     }];
     // create the chart when all data is loaded
     var createChart = function () {
-      $('#data-container').highcharts('StockChart', {
+      $('#data-person-container').highcharts('StockChart', {
         title: {
           text: '餐厅所需服务员人数对比'
         },
@@ -169,7 +174,6 @@ var Analytics = (function() {
       },
       method: 'post',
       success: function(result) {
-        console.log(result);
         for(var i = 0; i < result.length; i++) {
           var ret = result[i];
           var date = (new Date(ret.date)).getTime();
@@ -285,7 +289,6 @@ var Analytics = (function() {
       },
       method: 'post',
       success: function(result) {
-        console.log(result);
         for(var i = 0; i < result.length; i++) {
           var ret = result[i];
           var date = (new Date()).setTime(ret.date);

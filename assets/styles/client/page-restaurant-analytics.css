@@ -1,7 +1,10 @@
 .restaurant-data-form {
-  padding: 20px 20px 0;
+  padding: 20px;
 }
-.restaurant-tabs {}
+.restaurant-tabs {
+  padding: 10px 20px;
+  background-color: #ffffff;
+}
 .restaurant-tab,
 .restaurant-tab-label {
   float: left;
@@ -27,7 +30,7 @@
   font-weight: bold;
 }
 .analytics {
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 .analytics .panel {
   border-radius: 2px;
@@ -35,7 +38,7 @@
 }
 
 .analytics-title {
-  padding-left: 10px;
+  padding-left: 20px;
   font-size: 18px;
   font-weight: bold;
   height: 38px;
@@ -47,20 +50,38 @@
 .analytics-title-red {
   background-color: #d9534f;
 }
-.analytics-circle-wrap {
-  width: 260px;
-  height: 260px;
-  background-color: #d9534f;
+.analytics-content {
+  padding: 20px;
+}
+.analytics-icon {
+  width: 50%;
+  height: 100px;
+  line-height: 100px;
+  font-size: 60px;
+  float: left;
   text-align: center;
-  margin: 40px auto;
+  background-color: #5cb85c;
+  color: #ffffff;
+  cursor: pointer;
+}
+.analytics-icon-money {
+  background-color: #f0ad4e;
+}
+.analytics-circle-wrap {
+  float: left;
+  width: 50%;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
   cursor: pointer;
 }
 .analytics-circle {
-  line-height: 260px;
-  color: #ffffff;
   font-size: 3em;
 }
 .analytics-circle span {
   font-size: 0.5em;
   padding: 0 0.2em;
+}
+#data-person-container {
+  margin-top: 20px;
 }
